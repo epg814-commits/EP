@@ -1,6 +1,5 @@
-// app.js — Surface Pro trackpad friendly Swiper + menu + lightbox
+// app.js — Swiper + menu + lightbox (Surface Pro trackpad-safe)
 
-// ===== Swiper (prevents “double slide” on precision touchpads) =====
 const menuLinks = Array.from(document.querySelectorAll(".menu__link"));
 
 let wheelCooldown = false;
@@ -13,27 +12,25 @@ const swiper = new Swiper("#siteSlider", {
   keyboard: { enabled: true },
   pagination: { el: ".swiper-pagination", clickable: true },
 
-  // Trackpad / wheel tuning (Windows Precision touchpads often burst deltas)
+  // Trackpad/wheel tuning (Windows Precision touchpads can burst deltas)
   mousewheel: {
     forceToAxis: true,
-    sensitivity: 0.35,  // lower = less aggressive
-    thresholdDelta: 60, // ignore small jitter deltas
-    thresholdTime: 400, // require time between distinct gestures
+    sensitivity: 0.35,
+    thresholdDelta: 60,
+    thresholdTime: 400,
   },
 
-  // Avoid interactions during transitions
   preventInteractionOnTransition: true,
 
   on: {
     init() {
       setActiveMenu(this.activeIndex);
     },
-
     slideChange() {
       setActiveMenu(this.activeIndex);
     },
 
-    // Lock wheel whenever a slide transition begins (prevents double-advance)
+    // Lock wheel whenever a transition begins to prevent “double slide”
     slideNextTransitionStart() {
       lockWheel();
     },
@@ -47,17 +44,15 @@ function lockWheel() {
   if (wheelCooldown) return;
   wheelCooldown = true;
 
-  // Temporarily disable wheel input during/after the transition
   swiper.mousewheel.disable();
 
-  // Cooldown: tweak 250–500 if you want it snappier/slower
   setTimeout(() => {
     swiper.mousewheel.enable();
     wheelCooldown = false;
   }, 350);
 }
 
-// ===== Menu jump =====
+// Menu jump
 menuLinks.forEach((btn) => {
   btn.addEventListener("click", () => {
     const i = Number(btn.dataset.slide);
@@ -71,7 +66,7 @@ function setActiveMenu(index) {
   if (active) active.setAttribute("aria-current", "true");
 }
 
-// ===== Lightbox (gallery expand) =====
+// Lightbox
 const lightbox = document.querySelector("#lightbox");
 const lightboxImg = document.querySelector("#lightboxImg");
 const lightboxCap = document.querySelector("#lightboxCap");
@@ -86,15 +81,12 @@ function openLightbox({ src, alt, caption }) {
 }
 
 function closeLightbox() {
-  if (!lightbox) return;
   lightbox.close();
-  // Clear heavy assets for mobile/perf
   lightboxImg.src = "";
   lightboxImg.alt = "";
   if (lightboxCap) lightboxCap.textContent = "";
 }
 
-// Open on tile click
 document.addEventListener("click", (e) => {
   const tile = e.target.closest(".tile");
   if (!tile) return;
@@ -107,7 +99,6 @@ document.addEventListener("click", (e) => {
   });
 });
 
-// Close button
 lightboxClose?.addEventListener("click", closeLightbox);
 
 // Click outside image closes
@@ -120,7 +111,7 @@ lightbox?.addEventListener("click", (e) => {
   if (!inside) closeLightbox();
 });
 
-// Ensure src clears on ESC close
+// Clear src on ESC close
 lightbox?.addEventListener("close", () => {
   lightboxImg.src = "";
 });
