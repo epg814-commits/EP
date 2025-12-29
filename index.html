@@ -5,7 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Slider Portfolio</title>
 
+  <!-- Google Fonts (Didot-like luxury alternative) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Swiper -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -36,7 +43,7 @@
             <div class="twoCol">
               <div class="card">
                 <h3>What I do</h3>
-                <p class="muted">Web builds, branding, and design systems with a clean, gallery-first feel.</p>
+                <p class="muted">Web builds, branding, and design with a clean, gallery-first feel.</p>
               </div>
               <div class="card">
                 <h3>How I work</h3>
@@ -44,11 +51,11 @@
               </div>
             </div>
 
-            <div class="hint">Tip: Click any image tile to expand.</div>
+            <div class="hint">Tip: Click any tile to expand.</div>
           </div>
         </section>
 
-        <!-- 1: Web Builds gallery -->
+        <!-- 1: Web Builds -->
         <section class="swiper-slide slide slide--gallery">
           <div class="content content--wide">
             <div class="head">
@@ -57,7 +64,6 @@
             </div>
 
             <div class="gallery" data-gallery="web">
-              <!-- Replace these with your own images -->
               <button class="tile" data-full="images/web-01.jpg" aria-label="Open web build 1">
                 <img src="images/web-01.jpg" alt="Web build 1" loading="lazy">
               </button>
@@ -74,7 +80,7 @@
           </div>
         </section>
 
-        <!-- 2: Logos gallery -->
+        <!-- 2: Logos -->
         <section class="swiper-slide slide slide--gallery">
           <div class="content content--wide">
             <div class="head">
@@ -99,7 +105,7 @@
           </div>
         </section>
 
-        <!-- 3: Designs gallery -->
+        <!-- 3: Designs -->
         <section class="swiper-slide slide slide--gallery">
           <div class="content content--wide">
             <div class="head">
@@ -129,7 +135,7 @@
           <div class="content">
             <div class="head">
               <h2>Prices</h2>
-              <p class="muted">Example packages — adjust to your reality.</p>
+              <p class="muted">Example packages — edit these however you like.</p>
             </div>
 
             <div class="priceGrid">
@@ -137,7 +143,7 @@
                 <h3>Starter</h3>
                 <div class="price">$___</div>
                 <ul>
-                  <li>1-page site</li>
+                  <li>One-page site</li>
                   <li>Basic gallery</li>
                   <li>1 revision round</li>
                 </ul>
@@ -164,7 +170,7 @@
               </article>
             </div>
 
-            <p class="muted small">Want this to be a “pricing slider” inside the slide? Easy.</p>
+            <p class="muted small">Want a “pricing slider” inside this slide? Easy add.</p>
           </div>
         </section>
 
@@ -176,8 +182,8 @@
               <p class="muted">Tell me what you’re building.</p>
             </div>
 
-            <!-- Replace action with Formspree/Netlify endpoint -->
-            <form class="form" id="contactForm" method="post" action="#">
+            <!-- Replace action with Formspree / Netlify endpoint -->
+            <form class="form" method="post" action="#">
               <label>
                 <span>Name</span>
                 <input name="name" autocomplete="name" required />
@@ -205,7 +211,7 @@
     </div>
   </main>
 
-  <!-- Lightbox modal -->
+  <!-- Lightbox -->
   <dialog class="lightbox" id="lightbox">
     <button class="lightbox__close" id="lightboxClose" aria-label="Close">✕</button>
     <figure class="lightbox__figure">
