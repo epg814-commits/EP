@@ -3,95 +3,354 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Portfolio</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Snap Scroll Portfolio</title>
+
+  <style>
+    :root{
+      --bg:#0f1011;
+      --panel:#141516;
+      --text:#f2f2f2;
+      --muted:#b9b9b9;
+      --line:rgba(255,255,255,.12);
+      --rail:88px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
+      overflow:hidden; /* we scroll inside .scroller */
+    }
+
+    /* Fixed left rail (optional; matches your mock vibe) */
+    .rail{
+      position:fixed;
+      inset:0 auto 0 0;
+      width:var(--rail);
+      background:linear-gradient(#161718, #101112);
+      border-right:1px solid var(--line);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:18px 0;
+      z-index:60;
+    }
+    .rail .progress{
+      width:42px;height:4px;border-radius:999px;
+      background:rgba(255,255,255,.18);
+      overflow:hidden;
+      margin-top:auto;
+      margin-bottom:14px;
+    }
+    .rail .progress > span{
+      display:block;height:100%;width:0%;
+      background:rgba(255,255,255,.85);
+      transition:width .25s ease;
+    }
+
+    /* Top nav */
+    .topNav{
+      position:fixed;
+      top:18px;
+      left:var(--rail);
+      right:0;
+      display:flex;
+      justify-content:center;
+      gap:22px;
+      z-index:50;
+    }
+    .topNav a{
+      color:rgba(255,255,255,.78);
+      text-decoration:none;
+      font-size:13px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      padding:6px 8px;
+      border-radius:10px;
+      transition:background .2s ease, color .2s ease;
+    }
+    .topNav a.active{
+      color:#fff;
+      background:rgba(255,255,255,.10);
+    }
+
+    /* Scroll container */
+    .scroller{
+      position:relative;
+      height:100svh;
+      margin-left:var(--rail);
+      overflow:auto;
+      scroll-behavior:smooth;
+      scrollbar-width:none;
+    }
+    .scroller::-webkit-scrollbar{ display:none; }
+
+    /* Full-page sections */
+    section.panel{
+      min-height:100svh;
+      display:grid;
+      grid-template-columns:1.05fr 1.2fr;
+      border-bottom:1px solid var(--line);
+    }
+
+    .copy{
+      background:linear-gradient(180deg, #121314, #0f1011);
+      padding:120px 72px 56px 72px;
+      border-right:1px solid var(--line);
+      position:relative;
+    }
+    h1{
+      margin:0;
+      font-size:52px;
+      line-height:1.02;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+    }
+    .sub{
+      max-width:460px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      margin-top:22px;
+    }
+
+    .art{ position:relative; overflow:hidden; background:#0a0b0c; }
+    .art img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      filter:contrast(1.02) brightness(.95);
+      transform:scale(1.02);
+    }
+
+    /* Scroll button */
+    .scrollHintBtn{
+      position:absolute;
+      left:calc(100% - 36px);
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:96px;height:96px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.35);
+      background:rgba(0,0,0,.18);
+      backdrop-filter: blur(6px);
+      color:#fff;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      user-select:none;
+      transition:transform .15s ease;
+      z-index:10;
+    }
+    .scrollHintBtn:active{ transform:translate(-50%,-50%) scale(.98); }
+    .scrollHintBtn span{
+      letter-spacing:.06em;
+      font-size:14px;
+      opacity:.95;
+    }
+    .scrollHintBtn::after{
+      content:"→";
+      position:absolute;
+      right:18px;
+      font-size:18px;
+      opacity:.9;
+    }
+
+    /* Mobile: normal scrolling (don’t hijack wheel) + stacked layout */
+    @media (max-width: 900px){
+      :root{ --rail:0px; }
+      body{ overflow:auto; }
+      .rail{ display:none; }
+      .topNav{ left:0; top:10px; }
+      .scroller{ margin-left:0; height:auto; overflow:visible; }
+      section.panel{
+        grid-template-columns:1fr;
+        grid-template-rows:auto 56svh;
+      }
+      .copy{ padding:96px 22px 28px 22px; border-right:none; border-bottom:1px solid var(--line); }
+      h1{ font-size:40px; }
+      .scrollHintBtn{ display:none; }
+    }
+  </style>
 </head>
 <body>
-  <header class="rail">
-    <div class="stack">
-      <a class="iconBtn" href="#work" aria-label="Work">☰</a>
-      <a class="iconBtn" href="#contact" aria-label="Contact">⌕</a>
-    </div>
-    <div class="spacer"></div>
-    <div class="vertical">Portfolio</div>
-    <div class="progress" aria-hidden="true"><span></span></div>
-  </header>
 
-  <nav class="topNav">
-    <a href="#work">Work</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+  <aside class="rail">
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  </aside>
+
+  <nav class="topNav" aria-label="Primary">
+    <a href="#s0" data-index="0" class="active">Home</a>
+    <a href="#s1" data-index="1">Exhibition</a>
+    <a href="#s2" data-index="2">Discover</a>
+    <a href="#s3" data-index="3">Artists</a>
   </nav>
 
-  <main class="frame">
-    <section class="hero" id="work">
+  <main class="scroller" id="scroller">
+    <!-- Section 0 -->
+    <section class="panel" id="s0" data-title="Home">
       <div class="copy">
-        <h1 class="kicker">HISTORY<br/>OF ART <em>TEMPORI<br/>SERVIRE</em></h1>
-        <p class="sub">A simple, free GitHub Pages portfolio. Tap any piece to view it larger.</p>
+        <h1>History<br>of Art</h1>
+        <p class="sub">
+          Wheel scroll snaps between sections. Click the “Scroll” circle to advance. Top nav jumps to any section.
+        </p>
 
-        <div class="actions">
-          <a class="link" href="#gallery">Skip Intro</a>
-          <button class="btn" onclick="document.querySelector('#gallery').scrollIntoView({behavior:'smooth'})">View</button>
-        </div>
+        <button class="scrollHintBtn" data-next>
+          <span>Scroll</span>
+        </button>
       </div>
-
       <div class="art">
-        <img src="images/hero.jpg" alt="Featured work" />
+        <img src="images/hero.jpg" alt="Artwork 1">
       </div>
     </section>
 
-    <section class="galleryWrap" id="gallery">
-      <h2 class="sectionTitle">Gallery</h2>
+    <!-- Section 1 -->
+    <section class="panel" id="s1" data-title="Exhibition">
+      <div class="copy">
+        <h1>Exhibition</h1>
+        <p class="sub">Second section — swap images/text however you want.</p>
 
-      <div class="grid">
-        <!-- Replace these with your images -->
-        <button class="tile"><img src="images/work-1.jpg" alt="Work 1"></button>
-        <button class="tile"><img src="images/work-2.jpg" alt="Work 2"></button>
-        <button class="tile"><img src="images/work-3.jpg" alt="Work 3"></button>
-        <button class="tile"><img src="images/work-4.jpg" alt="Work 4"></button>
-        <button class="tile"><img src="images/work-5.jpg" alt="Work 5"></button>
-        <button class="tile"><img src="images/work-6.jpg" alt="Work 6"></button>
+        <button class="scrollHintBtn" data-next>
+          <span>Scroll</span>
+        </button>
+      </div>
+      <div class="art">
+        <img src="images/work-1.jpg" alt="Artwork 2">
       </div>
     </section>
 
-    <section class="info" id="about">
-      <h2>About</h2>
-      <p>Add a short bio here.</p>
+    <!-- Section 2 -->
+    <section class="panel" id="s2" data-title="Discover">
+      <div class="copy">
+        <h1>Discover</h1>
+        <p class="sub">Third section — this could be a grid, a story, or a featured series.</p>
+
+        <button class="scrollHintBtn" data-next>
+          <span>Scroll</span>
+        </button>
+      </div>
+      <div class="art">
+        <img src="images/work-2.jpg" alt="Artwork 3">
+      </div>
     </section>
 
-    <section class="info" id="contact">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:you@example.com">you@example.com</a></p>
+    <!-- Section 3 -->
+    <section class="panel" id="s3" data-title="Artists">
+      <div class="copy">
+        <h1>Artists</h1>
+        <p class="sub">Last section — you can change the button to “Back to top”.</p>
+
+        <button class="scrollHintBtn" data-top>
+          <span>Top</span>
+        </button>
+      </div>
+      <div class="art">
+        <img src="images/work-3.jpg" alt="Artwork 4">
+      </div>
     </section>
   </main>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="close" aria-label="Close">✕</button>
-    <img id="lightboxImg" alt="" />
-  </div>
-
   <script>
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lightboxImg');
-    const closeBtn = lb.querySelector('.close');
+    const scroller = document.getElementById("scroller");
+    const panels = Array.from(document.querySelectorAll("section.panel"));
+    const navLinks = Array.from(document.querySelectorAll(".topNav a"));
+    const progressBar = document.getElementById("progressBar");
 
-    document.querySelectorAll('.tile img').forEach(img => {
-      img.parentElement.addEventListener('click', () => {
-        lbImg.src = img.src;
-        lb.classList.add('open');
-        lb.setAttribute('aria-hidden', 'false');
+    let current = 0;
+    let isAnimating = false;
+    let wheelLock = false;
+
+    const isDesktop = () => window.matchMedia("(min-width: 901px)").matches;
+
+    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+    function setActiveNav(index){
+      navLinks.forEach(a => a.classList.toggle("active", Number(a.dataset.index) === index));
+    }
+
+    function setProgress(index){
+      const pct = ((index) / (panels.length - 1)) * 100;
+      if (progressBar) progressBar.style.width = `${pct}%`;
+    }
+
+    function goTo(index){
+      index = clamp(index, 0, panels.length - 1);
+      current = index;
+      setActiveNav(current);
+      setProgress(current);
+
+      isAnimating = true;
+      panels[current].scrollIntoView({ behavior: "smooth", block: "start" });
+
+      // release animation lock after smooth scroll likely completes
+      window.clearTimeout(goTo._t);
+      goTo._t = window.setTimeout(() => { isAnimating = false; }, 650);
+    }
+
+    // Top nav clicks
+    navLinks.forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        goTo(Number(link.dataset.index));
       });
     });
 
-    function closeLB(){
-      lb.classList.remove('open');
-      lb.setAttribute('aria-hidden', 'true');
-      lbImg.src = '';
-    }
-    closeBtn.addEventListener('click', closeLB);
-    lb.addEventListener('click', (e) => { if(e.target === lb) closeLB(); });
-    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLB(); });
+    // Scroll circle buttons
+    document.querySelectorAll("[data-next]").forEach(btn => {
+      btn.addEventListener("click", () => goTo(current + 1));
+    });
+    document.querySelectorAll("[data-top]").forEach(btn => {
+      btn.addEventListener("click", () => goTo(0));
+    });
+
+    // Wheel: snap section-by-section (desktop only)
+    scroller.addEventListener("wheel", (e) => {
+      if (!isDesktop()) return;         // don’t hijack mobile
+      if (isAnimating || wheelLock) { e.preventDefault(); return; }
+
+      // treat small trackpad movements as noise
+      const dy = e.deltaY;
+      if (Math.abs(dy) < 10) return;
+
+      e.preventDefault();
+      wheelLock = true;
+
+      if (dy > 0) goTo(current + 1);
+      else goTo(current - 1);
+
+      // throttle wheel so you don’t skip multiple sections
+      setTimeout(() => { wheelLock = false; }, 700);
+    }, { passive: false });
+
+    // Keep current index in sync if user drags scrollbar / uses keyboard
+    const io = new IntersectionObserver((entries) => {
+      // pick the most visible panel
+      const visible = entries
+        .filter(en => en.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (!visible) return;
+
+      const idx = panels.indexOf(visible.target);
+      if (idx !== -1 && idx !== current && !isAnimating){
+        current = idx;
+        setActiveNav(current);
+        setProgress(current);
+      }
+    }, { root: scroller, threshold: [0.55, 0.65, 0.75] });
+
+    panels.forEach(p => io.observe(p));
+
+    // Init
+    goTo(0);
+
+    window.addEventListener("resize", () => {
+      // when switching between mobile/desktop, ensure we’re aligned to a section
+      goTo(current);
+    });
   </script>
 </body>
 </html>
