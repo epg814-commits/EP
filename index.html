@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="rail">
+    <div class="stack">
+      <a class="iconBtn" href="#work" aria-label="Work">☰</a>
+      <a class="iconBtn" href="#contact" aria-label="Contact">⌕</a>
+    </div>
+    <div class="spacer"></div>
+    <div class="vertical">Portfolio</div>
+    <div class="progress" aria-hidden="true"><span></span></div>
+  </header>
+
+  <nav class="topNav">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main class="frame">
+    <section class="hero" id="work">
+      <div class="copy">
+        <h1 class="kicker">HISTORY<br/>OF ART <em>TEMPORI<br/>SERVIRE</em></h1>
+        <p class="sub">A simple, free GitHub Pages portfolio. Tap any piece to view it larger.</p>
+
+        <div class="actions">
+          <a class="link" href="#gallery">Skip Intro</a>
+          <button class="btn" onclick="document.querySelector('#gallery').scrollIntoView({behavior:'smooth'})">View</button>
+        </div>
+      </div>
+
+      <div class="art">
+        <img src="images/hero.jpg" alt="Featured work" />
+      </div>
+    </section>
+
+    <section class="galleryWrap" id="gallery">
+      <h2 class="sectionTitle">Gallery</h2>
+
+      <div class="grid">
+        <!-- Replace these with your images -->
+        <button class="tile"><img src="images/work-1.jpg" alt="Work 1"></button>
+        <button class="tile"><img src="images/work-2.jpg" alt="Work 2"></button>
+        <button class="tile"><img src="images/work-3.jpg" alt="Work 3"></button>
+        <button class="tile"><img src="images/work-4.jpg" alt="Work 4"></button>
+        <button class="tile"><img src="images/work-5.jpg" alt="Work 5"></button>
+        <button class="tile"><img src="images/work-6.jpg" alt="Work 6"></button>
+      </div>
+    </section>
+
+    <section class="info" id="about">
+      <h2>About</h2>
+      <p>Add a short bio here.</p>
+    </section>
+
+    <section class="info" id="contact">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:you@example.com">you@example.com</a></p>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="close" aria-label="Close">✕</button>
+    <img id="lightboxImg" alt="" />
+  </div>
+
+  <script>
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg');
+    const closeBtn = lb.querySelector('.close');
+
+    document.querySelectorAll('.tile img').forEach(img => {
+      img.parentElement.addEventListener('click', () => {
+        lbImg.src = img.src;
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    function closeLB(){
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      lbImg.src = '';
+    }
+    closeBtn.addEventListener('click', closeLB);
+    lb.addEventListener('click', (e) => { if(e.target === lb) closeLB(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLB(); });
+  </script>
+</body>
+</html>
