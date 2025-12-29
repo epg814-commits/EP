@@ -3,354 +3,218 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Snap Scroll Portfolio</title>
+  <title>Slider Portfolio</title>
 
-  <style>
-    :root{
-      --bg:#0f1011;
-      --panel:#141516;
-      --text:#f2f2f2;
-      --muted:#b9b9b9;
-      --line:rgba(255,255,255,.12);
-      --rail:88px;
-    }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--text);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
-      overflow:hidden; /* we scroll inside .scroller */
-    }
-
-    /* Fixed left rail (optional; matches your mock vibe) */
-    .rail{
-      position:fixed;
-      inset:0 auto 0 0;
-      width:var(--rail);
-      background:linear-gradient(#161718, #101112);
-      border-right:1px solid var(--line);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      padding:18px 0;
-      z-index:60;
-    }
-    .rail .progress{
-      width:42px;height:4px;border-radius:999px;
-      background:rgba(255,255,255,.18);
-      overflow:hidden;
-      margin-top:auto;
-      margin-bottom:14px;
-    }
-    .rail .progress > span{
-      display:block;height:100%;width:0%;
-      background:rgba(255,255,255,.85);
-      transition:width .25s ease;
-    }
-
-    /* Top nav */
-    .topNav{
-      position:fixed;
-      top:18px;
-      left:var(--rail);
-      right:0;
-      display:flex;
-      justify-content:center;
-      gap:22px;
-      z-index:50;
-    }
-    .topNav a{
-      color:rgba(255,255,255,.78);
-      text-decoration:none;
-      font-size:13px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      padding:6px 8px;
-      border-radius:10px;
-      transition:background .2s ease, color .2s ease;
-    }
-    .topNav a.active{
-      color:#fff;
-      background:rgba(255,255,255,.10);
-    }
-
-    /* Scroll container */
-    .scroller{
-      position:relative;
-      height:100svh;
-      margin-left:var(--rail);
-      overflow:auto;
-      scroll-behavior:smooth;
-      scrollbar-width:none;
-    }
-    .scroller::-webkit-scrollbar{ display:none; }
-
-    /* Full-page sections */
-    section.panel{
-      min-height:100svh;
-      display:grid;
-      grid-template-columns:1.05fr 1.2fr;
-      border-bottom:1px solid var(--line);
-    }
-
-    .copy{
-      background:linear-gradient(180deg, #121314, #0f1011);
-      padding:120px 72px 56px 72px;
-      border-right:1px solid var(--line);
-      position:relative;
-    }
-    h1{
-      margin:0;
-      font-size:52px;
-      line-height:1.02;
-      letter-spacing:.03em;
-      text-transform:uppercase;
-    }
-    .sub{
-      max-width:460px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.7;
-      margin-top:22px;
-    }
-
-    .art{ position:relative; overflow:hidden; background:#0a0b0c; }
-    .art img{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      object-fit:cover;
-      filter:contrast(1.02) brightness(.95);
-      transform:scale(1.02);
-    }
-
-    /* Scroll button */
-    .scrollHintBtn{
-      position:absolute;
-      left:calc(100% - 36px);
-      top:50%;
-      transform:translate(-50%,-50%);
-      width:96px;height:96px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.35);
-      background:rgba(0,0,0,.18);
-      backdrop-filter: blur(6px);
-      color:#fff;
-      cursor:pointer;
-      display:grid;
-      place-items:center;
-      user-select:none;
-      transition:transform .15s ease;
-      z-index:10;
-    }
-    .scrollHintBtn:active{ transform:translate(-50%,-50%) scale(.98); }
-    .scrollHintBtn span{
-      letter-spacing:.06em;
-      font-size:14px;
-      opacity:.95;
-    }
-    .scrollHintBtn::after{
-      content:"→";
-      position:absolute;
-      right:18px;
-      font-size:18px;
-      opacity:.9;
-    }
-
-    /* Mobile: normal scrolling (don’t hijack wheel) + stacked layout */
-    @media (max-width: 900px){
-      :root{ --rail:0px; }
-      body{ overflow:auto; }
-      .rail{ display:none; }
-      .topNav{ left:0; top:10px; }
-      .scroller{ margin-left:0; height:auto; overflow:visible; }
-      section.panel{
-        grid-template-columns:1fr;
-        grid-template-rows:auto 56svh;
-      }
-      .copy{ padding:96px 22px 28px 22px; border-right:none; border-bottom:1px solid var(--line); }
-      h1{ font-size:40px; }
-      .scrollHintBtn{ display:none; }
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Top menu -->
+  <header class="topbar">
+    <div class="brand">Your Studio</div>
 
-  <aside class="rail">
-    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
-  </aside>
+    <nav class="menu" aria-label="Primary">
+      <button class="menu__link" data-slide="0">Home</button>
+      <button class="menu__link" data-slide="1">Web Builds</button>
+      <button class="menu__link" data-slide="2">Logos</button>
+      <button class="menu__link" data-slide="3">Designs</button>
+      <button class="menu__link" data-slide="4">Prices</button>
+      <button class="menu__link" data-slide="5">Contact</button>
+    </nav>
+  </header>
 
-  <nav class="topNav" aria-label="Primary">
-    <a href="#s0" data-index="0" class="active">Home</a>
-    <a href="#s1" data-index="1">Exhibition</a>
-    <a href="#s2" data-index="2">Discover</a>
-    <a href="#s3" data-index="3">Artists</a>
-  </nav>
+  <main class="shell">
+    <div class="swiper" id="siteSlider">
+      <div class="swiper-wrapper">
 
-  <main class="scroller" id="scroller">
-    <!-- Section 0 -->
-    <section class="panel" id="s0" data-title="Home">
-      <div class="copy">
-        <h1>History<br>of Art</h1>
-        <p class="sub">
-          Wheel scroll snaps between sections. Click the “Scroll” circle to advance. Top nav jumps to any section.
-        </p>
+        <!-- 0: Home/About -->
+        <section class="swiper-slide slide slide--hero">
+          <div class="content hero">
+            <h1>Home / About</h1>
+            <p class="muted">Swipe, trackpad-scroll, arrow keys — or jump with the menu.</p>
 
-        <button class="scrollHintBtn" data-next>
-          <span>Scroll</span>
-        </button>
+            <div class="twoCol">
+              <div class="card">
+                <h3>What I do</h3>
+                <p class="muted">Web builds, branding, and design systems with a clean, gallery-first feel.</p>
+              </div>
+              <div class="card">
+                <h3>How I work</h3>
+                <p class="muted">Fast iterations, punchy visuals, and a simple path from idea → shipped.</p>
+              </div>
+            </div>
+
+            <div class="hint">Tip: Click any image tile to expand.</div>
+          </div>
+        </section>
+
+        <!-- 1: Web Builds gallery -->
+        <section class="swiper-slide slide slide--gallery">
+          <div class="content content--wide">
+            <div class="head">
+              <h2>Web Builds</h2>
+              <p class="muted">Case studies, landing pages, interactive experiments.</p>
+            </div>
+
+            <div class="gallery" data-gallery="web">
+              <!-- Replace these with your own images -->
+              <button class="tile" data-full="images/web-01.jpg" aria-label="Open web build 1">
+                <img src="images/web-01.jpg" alt="Web build 1" loading="lazy">
+              </button>
+              <button class="tile" data-full="images/web-02.jpg" aria-label="Open web build 2">
+                <img src="images/web-02.jpg" alt="Web build 2" loading="lazy">
+              </button>
+              <button class="tile" data-full="images/web-03.jpg" aria-label="Open web build 3">
+                <img src="images/web-03.jpg" alt="Web build 3" loading="lazy">
+              </button>
+              <button class="tile" data-full="images/web-04.jpg" aria-label="Open web build 4">
+                <img src="images/web-04.jpg" alt="Web build 4" loading="lazy">
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2: Logos gallery -->
+        <section class="swiper-slide slide slide--gallery">
+          <div class="content content--wide">
+            <div class="head">
+              <h2>Logos</h2>
+              <p class="muted">Marks, wordmarks, lockups.</p>
+            </div>
+
+            <div class="gallery" data-gallery="logos">
+              <button class="tile" data-full="images/logo-01.jpg" aria-label="Open logo 1">
+                <img src="images/logo-01.jpg" alt="Logo 1" loading="lazy">
+              </button>
+              <button class="tile" data-full="images/logo-02.jpg" aria-label="Open logo 2">
+                <img src="images/logo-02.jpg" alt="Logo 2" loading="lazy">
+              </button>
+              <button class="tile" data-full="images/logo-03.jpg" aria-label="Open logo 3">
+                <img src="images/logo-03.jpg" alt="Logo 3" loading="lazy">
+              </button>
+              <button class="tile" data-full="images/logo-04.jpg" aria-label="Open logo 4">
+                <img src="images/logo-04.jpg" alt="Logo 4" loading="lazy">
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3: Designs gallery -->
+        <section class="swiper-slide slide slide--gallery">
+          <div class="content content--wide">
+            <div class="head">
+              <h2>Designs</h2>
+              <p class="muted">Posters, social, UI comps, layouts.</p>
+            </div>
+
+            <div class="gallery" data-gallery="designs">
+              <button class="tile" data-full="images/design-01.jpg" aria-label="Open design 1">
+                <img src="images/design-01.jpg" alt="Design 1" loading="lazy">
+              </button>
+              <button class="tile" data-full="images/design-02.jpg" aria-label="Open design 2">
+                <img src="images/design-02.jpg" alt="Design 2" loading="lazy">
+              </button>
+              <button class="tile" data-full="images/design-03.jpg" aria-label="Open design 3">
+                <img src="images/design-03.jpg" alt="Design 3" loading="lazy">
+              </button>
+              <button class="tile" data-full="images/design-04.jpg" aria-label="Open design 4">
+                <img src="images/design-04.jpg" alt="Design 4" loading="lazy">
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4: Prices -->
+        <section class="swiper-slide slide slide--prices">
+          <div class="content">
+            <div class="head">
+              <h2>Prices</h2>
+              <p class="muted">Example packages — adjust to your reality.</p>
+            </div>
+
+            <div class="priceGrid">
+              <article class="priceCard">
+                <h3>Starter</h3>
+                <div class="price">$___</div>
+                <ul>
+                  <li>1-page site</li>
+                  <li>Basic gallery</li>
+                  <li>1 revision round</li>
+                </ul>
+              </article>
+
+              <article class="priceCard">
+                <h3>Pro</h3>
+                <div class="price">$___</div>
+                <ul>
+                  <li>Multi-section build</li>
+                  <li>Custom animations</li>
+                  <li>2 revision rounds</li>
+                </ul>
+              </article>
+
+              <article class="priceCard">
+                <h3>Studio</h3>
+                <div class="price">$___</div>
+                <ul>
+                  <li>Full brand + site</li>
+                  <li>Design system</li>
+                  <li>Priority turnaround</li>
+                </ul>
+              </article>
+            </div>
+
+            <p class="muted small">Want this to be a “pricing slider” inside the slide? Easy.</p>
+          </div>
+        </section>
+
+        <!-- 5: Contact -->
+        <section class="swiper-slide slide slide--contact">
+          <div class="content">
+            <div class="head">
+              <h2>Contact</h2>
+              <p class="muted">Tell me what you’re building.</p>
+            </div>
+
+            <!-- Replace action with Formspree/Netlify endpoint -->
+            <form class="form" id="contactForm" method="post" action="#">
+              <label>
+                <span>Name</span>
+                <input name="name" autocomplete="name" required />
+              </label>
+
+              <label>
+                <span>Email</span>
+                <input name="email" type="email" autocomplete="email" required />
+              </label>
+
+              <label>
+                <span>Message</span>
+                <textarea name="message" rows="5" required></textarea>
+              </label>
+
+              <button type="submit" class="btn">Send</button>
+              <p class="muted small">Use Formspree or Netlify Forms if you don’t want a backend.</p>
+            </form>
+          </div>
+        </section>
+
       </div>
-      <div class="art">
-        <img src="images/hero.jpg" alt="Artwork 1">
-      </div>
-    </section>
 
-    <!-- Section 1 -->
-    <section class="panel" id="s1" data-title="Exhibition">
-      <div class="copy">
-        <h1>Exhibition</h1>
-        <p class="sub">Second section — swap images/text however you want.</p>
-
-        <button class="scrollHintBtn" data-next>
-          <span>Scroll</span>
-        </button>
-      </div>
-      <div class="art">
-        <img src="images/work-1.jpg" alt="Artwork 2">
-      </div>
-    </section>
-
-    <!-- Section 2 -->
-    <section class="panel" id="s2" data-title="Discover">
-      <div class="copy">
-        <h1>Discover</h1>
-        <p class="sub">Third section — this could be a grid, a story, or a featured series.</p>
-
-        <button class="scrollHintBtn" data-next>
-          <span>Scroll</span>
-        </button>
-      </div>
-      <div class="art">
-        <img src="images/work-2.jpg" alt="Artwork 3">
-      </div>
-    </section>
-
-    <!-- Section 3 -->
-    <section class="panel" id="s3" data-title="Artists">
-      <div class="copy">
-        <h1>Artists</h1>
-        <p class="sub">Last section — you can change the button to “Back to top”.</p>
-
-        <button class="scrollHintBtn" data-top>
-          <span>Top</span>
-        </button>
-      </div>
-      <div class="art">
-        <img src="images/work-3.jpg" alt="Artwork 4">
-      </div>
-    </section>
+      <div class="swiper-pagination"></div>
+    </div>
   </main>
 
-  <script>
-    const scroller = document.getElementById("scroller");
-    const panels = Array.from(document.querySelectorAll("section.panel"));
-    const navLinks = Array.from(document.querySelectorAll(".topNav a"));
-    const progressBar = document.getElementById("progressBar");
+  <!-- Lightbox modal -->
+  <dialog class="lightbox" id="lightbox">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close">✕</button>
+    <figure class="lightbox__figure">
+      <img id="lightboxImg" alt="">
+      <figcaption id="lightboxCap" class="muted small"></figcaption>
+    </figure>
+  </dialog>
 
-    let current = 0;
-    let isAnimating = false;
-    let wheelLock = false;
-
-    const isDesktop = () => window.matchMedia("(min-width: 901px)").matches;
-
-    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-
-    function setActiveNav(index){
-      navLinks.forEach(a => a.classList.toggle("active", Number(a.dataset.index) === index));
-    }
-
-    function setProgress(index){
-      const pct = ((index) / (panels.length - 1)) * 100;
-      if (progressBar) progressBar.style.width = `${pct}%`;
-    }
-
-    function goTo(index){
-      index = clamp(index, 0, panels.length - 1);
-      current = index;
-      setActiveNav(current);
-      setProgress(current);
-
-      isAnimating = true;
-      panels[current].scrollIntoView({ behavior: "smooth", block: "start" });
-
-      // release animation lock after smooth scroll likely completes
-      window.clearTimeout(goTo._t);
-      goTo._t = window.setTimeout(() => { isAnimating = false; }, 650);
-    }
-
-    // Top nav clicks
-    navLinks.forEach(link => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        goTo(Number(link.dataset.index));
-      });
-    });
-
-    // Scroll circle buttons
-    document.querySelectorAll("[data-next]").forEach(btn => {
-      btn.addEventListener("click", () => goTo(current + 1));
-    });
-    document.querySelectorAll("[data-top]").forEach(btn => {
-      btn.addEventListener("click", () => goTo(0));
-    });
-
-    // Wheel: snap section-by-section (desktop only)
-    scroller.addEventListener("wheel", (e) => {
-      if (!isDesktop()) return;         // don’t hijack mobile
-      if (isAnimating || wheelLock) { e.preventDefault(); return; }
-
-      // treat small trackpad movements as noise
-      const dy = e.deltaY;
-      if (Math.abs(dy) < 10) return;
-
-      e.preventDefault();
-      wheelLock = true;
-
-      if (dy > 0) goTo(current + 1);
-      else goTo(current - 1);
-
-      // throttle wheel so you don’t skip multiple sections
-      setTimeout(() => { wheelLock = false; }, 700);
-    }, { passive: false });
-
-    // Keep current index in sync if user drags scrollbar / uses keyboard
-    const io = new IntersectionObserver((entries) => {
-      // pick the most visible panel
-      const visible = entries
-        .filter(en => en.isIntersecting)
-        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-      if (!visible) return;
-
-      const idx = panels.indexOf(visible.target);
-      if (idx !== -1 && idx !== current && !isAnimating){
-        current = idx;
-        setActiveNav(current);
-        setProgress(current);
-      }
-    }, { root: scroller, threshold: [0.55, 0.65, 0.75] });
-
-    panels.forEach(p => io.observe(p));
-
-    // Init
-    goTo(0);
-
-    window.addEventListener("resize", () => {
-      // when switching between mobile/desktop, ensure we’re aligned to a section
-      goTo(current);
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
