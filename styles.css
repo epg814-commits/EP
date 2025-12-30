@@ -1,120 +1,396 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root{
+  --bg: #f5f2ed;
+  --ink: #12110f;
+  --muted: rgba(18,17,15,0.62);
+
+  --ivory: #F4F1EC;
+  --stone: #E6E2DA;
+  --flat:  #F7F4EF;
+  --charcoal: #1C1B19;
+
+  --radius: 22px;
+  --gap: 22px;
 }
 
-body {
-  font-family: "Cormorant Garamond", serif;
-  background: #f5f2ed;
+body{
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
   overflow: hidden;
 }
 
-.nav {
-  position: fixed;
-  top: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  z-index: 10;
+h1,h2{
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
-.nav ul {
-  display: flex;
-  gap: 40px;
-  list-style: none;
-}
-
-.slider {
-  display: flex;
-  height: 100vh;
-  width: 500vw;
-  transition: transform 1s ease;
-}
-
-.slide {
+.viewport{
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
+}
+
+.slider{
+  height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  transform: translateX(0);
+  transition: transform 900ms cubic-bezier(.2,.9,.2,1);
+  will-change: transform;
 }
 
-.slide img {
-  width: 80%;
-  height: auto;
-  transition: transform 1s ease;
-}
-
-.slide img:hover {
-  transform: scale(1.03);
-}
-
-.contact {
-  background: #111;
-  color: #f5f2ed;
-  text-align: center;
-}
-/* ---------------- LOGO SLIDES ---------------- */
-
-.slide.logo {
-  display: grid;
-  place-items: center;
+.slide{
+  width: 100vw;
+  height: 100vh;
+  flex: 0 0 100vw;
+  padding: 120px 64px 64px;
   position: relative;
 }
 
-/* background system */
-.slide.logo.ivory { background: #F4F1EC; }
-.slide.logo.stone { background: #E6E2DA; }
-.slide.logo.charcoal { background: #1C1B19; }
-.slide.logo.texture {
+/* ---------- NAV ---------- */
+.nav{
+  position: fixed;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1100px, 92vw);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  z-index: 50;
+}
+
+.brand{
+  border: none;
+  background: transparent;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.navLinks{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 999px;
+  padding: 10px 12px;
+  backdrop-filter: blur(10px);
+}
+
+.navBtn{
+  border: none;
+  background: transparent;
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  color: rgba(18,17,15,0.75);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.navBtn:hover{
+  background: rgba(0,0,0,0.04);
+  color: var(--ink);
+}
+
+.navBtn.active{
+  background: rgba(0,0,0,0.06);
+  color: var(--ink);
+}
+
+.navHint{
+  font-size: 12px;
+  color: rgba(18,17,15,0.55);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  display: grid;
+  place-items: center;
+}
+
+.heroInner{
+  width: min(860px, 92vw);
+  text-align: center;
+  display: grid;
+  gap: 22px;
+  place-items: center;
+}
+
+.heroLogo{
+  width: min(520px, 76vw);
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.heroAbout{
+  max-width: 56ch;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+.heroMeta{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.heroMeta span{
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(18,17,15,0.65);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.5);
+}
+
+/* ---------- SECTION HEADER ---------- */
+.slideHeader{
+  width: min(1100px, 92vw);
+  margin: 0 auto 22px;
+}
+
+.slideHeader h1{
+  font-size: 44px;
+  line-height: 1.0;
+  margin-bottom: 8px;
+}
+
+.slideHeader p{
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+/* ---------- MASONRY (like your reference image) ---------- */
+.masonry{
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  column-count: 3;
+  column-gap: var(--gap);
+  padding-bottom: 24px;
+}
+
+.tile{
+  width: 100%;
+  border: none;
+  background: rgba(255,255,255,0.4);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: block;
+  margin: 0 0 var(--gap);
+  cursor: pointer;
+  break-inside: avoid;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.tile img{
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 600ms ease;
+}
+
+.tile:hover img{
+  transform: scale(1.03);
+}
+
+/* Optional visual hierarchy: different “heights” by padding */
+.tile-hero img{ }
+.tile-md img{ }
+.tile-sm img{ }
+
+/* ---------- LOGO TILE BACKGROUNDS + MAT ---------- */
+.logoBg-ivory{ background: var(--ivory); }
+.logoBg-stone{ background: var(--stone); }
+.logoBg-flat{ background: var(--flat); }
+.logoBg-charcoal{ background: var(--charcoal); }
+.logoBg-texture{
   background-image: url("images/greige-texture.webp");
   background-size: cover;
   background-position: center;
 }
 
-/* mat / frame */
-.slide.logo::before {
+/* Logos should be contained (not cropped) */
+.tile.logoBg-ivory img,
+.tile.logoBg-stone img,
+.tile.logoBg-flat img,
+.tile.logoBg-charcoal img,
+.tile.logoBg-texture img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 9%;
+}
+
+/* Light “museum mat” line */
+.tile.logoBg-ivory::before,
+.tile.logoBg-stone::before,
+.tile.logoBg-flat::before,
+.tile.logoBg-texture::before,
+.tile.logoBg-charcoal::before{
   content: "";
   position: absolute;
-  inset: 60px;
-  border-radius: 20px;
-  border: 1px solid rgba(0,0,0,0.06);
+  inset: 14px;
+  border-radius: calc(var(--radius) - 8px);
   pointer-events: none;
+  border: 1px solid rgba(0,0,0,0.06);
+  opacity: 0.75;
 }
 
-.slide.logo.charcoal::before {
-  border-color: rgba(255,255,255,0.08);
+.tile.logoBg-charcoal::before{
+  border-color: rgba(255,255,255,0.10);
 }
 
-/* logo image behavior */
-.slide.logo img {
-  width: 70%;
-  height: auto;
-  object-fit: contain;
+/* Extra subtle mat for color-heavy logos like Latinx Club */
+.matFrame img{ padding: 10%; }
+
+/* ---------- VIEWER (fullscreen click to open/close) ---------- */
+.viewer{
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,10,0.82);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+  z-index: 100;
 }
 
-/* sizing hierarchy */
-.slide.logo.hero img { width: 78%; }
-.slide.logo.md img { width: 68%; }
-.slide.logo.sm img { width: 60%; }
-
-/* ---------------- WORK SLIDES ---------------- */
-
-.slide.work img {
-  width: 85%;
-  height: auto;
+.viewer.open{
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* ---------------- CONTACT ---------------- */
+.viewer img{
+  max-width: min(92vw, 1200px);
+  max-height: 86vh;
+  border-radius: 18px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.45);
+  cursor: zoom-out;
+}
 
-.slide.contact {
+.viewerClose{
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.35);
+  color: rgba(255,255,255,0.9);
+  cursor: pointer;
+}
+
+/* ---------- CONTACT ---------- */
+.contact{
   background: #111;
   color: #f5f2ed;
+  display: grid;
+  place-items: center;
 }
 
+.contactInner{
+  width: min(640px, 92vw);
+  text-align: center;
+  display: grid;
+  gap: 14px;
+}
+
+.contactInner h1{
+  font-size: 44px;
+}
+
+.contactSub{
+  color: rgba(245,242,237,0.72);
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.contactForm{
+  text-align: left;
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.contactForm label span{
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245,242,237,0.65);
+  margin-bottom: 6px;
+}
+
+.contactForm input,
+.contactForm textarea{
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: #f5f2ed;
+  padding: 12px 14px;
+  outline: none;
+  font-family: inherit;
+}
+
+.contactForm input::placeholder,
+.contactForm textarea::placeholder{
+  color: rgba(245,242,237,0.45);
+}
+
+.sendBtn{
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.10);
+  color: #f5f2ed;
+  padding: 12px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+}
+
+.sendBtn:hover{
+  background: rgba(255,255,255,0.14);
+}
+
+.contactNote{
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(245,242,237,0.58);
+}
+
+.mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 980px){
+  .slide{ padding: 110px 26px 40px; }
+  .masonry{ column-count: 2; }
+  .navHint{ display: none; }
+}
+
+@media (max-width: 560px){
+  .masonry{ column-count: 1; }
+  .slideHeader h1{ font-size: 38px; }
+}
