@@ -1,226 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Slider Portfolio</title>
-
-  <!-- Google Fonts (Didot-like luxury alternative) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Swiper -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Studio Portfolio</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Top menu -->
-  <header class="topbar">
-    <div class="brand">Your Studio</div>
 
-    <nav class="menu" aria-label="Primary">
-      <button class="menu__link" data-slide="0">Home</button>
-      <button class="menu__link" data-slide="1">Web Builds</button>
-      <button class="menu__link" data-slide="2">Logos</button>
-      <button class="menu__link" data-slide="3">Designs</button>
-      <button class="menu__link" data-slide="4">Prices</button>
-      <button class="menu__link" data-slide="5">Contact</button>
-    </nav>
-  </header>
+<nav class="nav">
+  <span>Studio</span>
+  <ul>
+    <li>Work</li>
+    <li>About</li>
+    <li>Contact</li>
+  </ul>
+</nav>
 
-  <main class="shell">
-    <div class="swiper" id="siteSlider">
-      <div class="swiper-wrapper">
-
-        <!-- 0: Home/About -->
-        <section class="swiper-slide slide slide--hero">
-          <div class="content hero">
-            <h1>Home / About</h1>
-            <p class="muted">Swipe, trackpad-scroll, arrow keys — or jump with the menu.</p>
-
-            <div class="twoCol">
-              <div class="card">
-                <h3>What I do</h3>
-                <p class="muted">Web builds, branding, and design with a clean, gallery-first feel.</p>
-              </div>
-              <div class="card">
-                <h3>How I work</h3>
-                <p class="muted">Fast iterations, punchy visuals, and a simple path from idea → shipped.</p>
-              </div>
-            </div>
-
-            <div class="hint">Tip: Click any tile to expand.</div>
-          </div>
-        </section>
-
-        <!-- 1: Web Builds -->
-        <section class="swiper-slide slide slide--gallery">
-          <div class="content content--wide">
-            <div class="head">
-              <h2>Web Builds</h2>
-              <p class="muted">Case studies, landing pages, interactive experiments.</p>
-            </div>
-
-            <div class="gallery" data-gallery="web">
-              <button class="tile" data-full="images/web-01.jpg" aria-label="Open web build 1">
-                <img src="images/web-01.jpg" alt="Web build 1" loading="lazy">
-              </button>
-              <button class="tile" data-full="images/web-02.jpg" aria-label="Open web build 2">
-                <img src="images/web-02.jpg" alt="Web build 2" loading="lazy">
-              </button>
-              <button class="tile" data-full="images/web-03.jpg" aria-label="Open web build 3">
-                <img src="images/web-03.jpg" alt="Web build 3" loading="lazy">
-              </button>
-              <button class="tile" data-full="images/web-04.jpg" aria-label="Open web build 4">
-                <img src="images/web-04.jpg" alt="Web build 4" loading="lazy">
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <!-- 2: Logos -->
-        <section class="swiper-slide slide slide--gallery">
-          <div class="content content--wide">
-            <div class="head">
-              <h2>Logos</h2>
-              <p class="muted">Marks, wordmarks, lockups.</p>
-            </div>
-
-            <div class="gallery" data-gallery="logos">
-              <button class="tile" data-full="images/logo-01.jpg" aria-label="Open logo 1">
-                <img src="images/logo-01.jpg" alt="Logo 1" loading="lazy">
-              </button>
-              <button class="tile" data-full="images/logo-02.jpg" aria-label="Open logo 2">
-                <img src="images/logo-02.jpg" alt="Logo 2" loading="lazy">
-              </button>
-              <button class="tile" data-full="images/logo-03.jpg" aria-label="Open logo 3">
-                <img src="images/logo-03.jpg" alt="Logo 3" loading="lazy">
-              </button>
-              <button class="tile" data-full="images/logo-04.jpg" aria-label="Open logo 4">
-                <img src="images/logo-04.jpg" alt="Logo 4" loading="lazy">
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <!-- 3: Designs -->
-        <section class="swiper-slide slide slide--gallery">
-          <div class="content content--wide">
-            <div class="head">
-              <h2>Designs</h2>
-              <p class="muted">Posters, social, UI comps, layouts.</p>
-            </div>
-
-            <div class="gallery" data-gallery="designs">
-              <button class="tile" data-full="images/design-01.jpg" aria-label="Open design 1">
-                <img src="images/design-01.jpg" alt="Design 1" loading="lazy">
-              </button>
-              <button class="tile" data-full="images/design-02.jpg" aria-label="Open design 2">
-                <img src="images/design-02.jpg" alt="Design 2" loading="lazy">
-              </button>
-              <button class="tile" data-full="images/design-03.jpg" aria-label="Open design 3">
-                <img src="images/design-03.jpg" alt="Design 3" loading="lazy">
-              </button>
-              <button class="tile" data-full="images/design-04.jpg" aria-label="Open design 4">
-                <img src="images/design-04.jpg" alt="Design 4" loading="lazy">
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <!-- 4: Prices -->
-        <section class="swiper-slide slide slide--prices">
-          <div class="content">
-            <div class="head">
-              <h2>Prices</h2>
-              <p class="muted">Example packages — edit these however you like.</p>
-            </div>
-
-            <div class="priceGrid">
-              <article class="priceCard">
-                <h3>Starter</h3>
-                <div class="price">$___</div>
-                <ul>
-                  <li>One-page site</li>
-                  <li>Basic gallery</li>
-                  <li>1 revision round</li>
-                </ul>
-              </article>
-
-              <article class="priceCard">
-                <h3>Pro</h3>
-                <div class="price">$___</div>
-                <ul>
-                  <li>Multi-section build</li>
-                  <li>Custom animations</li>
-                  <li>2 revision rounds</li>
-                </ul>
-              </article>
-
-              <article class="priceCard">
-                <h3>Studio</h3>
-                <div class="price">$___</div>
-                <ul>
-                  <li>Full brand + site</li>
-                  <li>Design system</li>
-                  <li>Priority turnaround</li>
-                </ul>
-              </article>
-            </div>
-
-            <p class="muted small">Want a “pricing slider” inside this slide? Easy add.</p>
-          </div>
-        </section>
-
-        <!-- 5: Contact -->
-        <section class="swiper-slide slide slide--contact">
-          <div class="content">
-            <div class="head">
-              <h2>Contact</h2>
-              <p class="muted">Tell me what you’re building.</p>
-            </div>
-
-            <!-- Replace action with Formspree / Netlify endpoint -->
-            <form class="form" method="post" action="#">
-              <label>
-                <span>Name</span>
-                <input name="name" autocomplete="name" required />
-              </label>
-
-              <label>
-                <span>Email</span>
-                <input name="email" type="email" autocomplete="email" required />
-              </label>
-
-              <label>
-                <span>Message</span>
-                <textarea name="message" rows="5" required></textarea>
-              </label>
-
-              <button type="submit" class="btn">Send</button>
-              <p class="muted small">Use Formspree or Netlify Forms if you don’t want a backend.</p>
-            </form>
-          </div>
-        </section>
-
-      </div>
-
-      <div class="swiper-pagination"></div>
+<div class="slider">
+  <section class="slide"><img src="images/work-01.jpg" /></section>
+  <section class="slide"><img src="images/work-02.jpg" /></section>
+  <section class="slide"><img src="images/work-03.jpg" /></section>
+  <section class="slide"><img src="images/work-04.jpg" /></section>
+  <section class="slide contact">
+    <div>
+      <h1>Available for select projects</h1>
+      <p>hello@studio.com</p>
     </div>
-  </main>
+  </section>
+</div>
 
-  <!-- Lightbox -->
-  <dialog class="lightbox" id="lightbox">
-    <button class="lightbox__close" id="lightboxClose" aria-label="Close">✕</button>
-    <figure class="lightbox__figure">
-      <img id="lightboxImg" alt="">
-      <figcaption id="lightboxCap" class="muted small"></figcaption>
-    </figure>
-  </dialog>
-
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="app.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
