@@ -1,168 +1,183 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio</title>
-
-  <!-- Luxury + readable pairing -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
+  <title>Christina Mechelle Creates</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
+  <!-- Matte lux background texture -->
+  <div class="bg-matte" aria-hidden="true"></div>
 
-  <!-- Top Nav -->
-  <nav class="nav" aria-label="Primary">
-    <button class="brand" data-jump="0" aria-label="Go to Home">Studio</button>
+  <!-- Top nav -->
+  <header class="topbar">
+    <div class="topbar__inner">
+      <div class="brand">
+        <span class="brand__dot"></span>
+        <span class="brand__name">CMC</span>
+      </div>
 
-    <div class="navLinks" role="tablist" aria-label="Sections">
-      <button class="navBtn active" data-jump="0">Home</button>
-      <button class="navBtn" data-jump="1">Logos</button>
-      <button class="navBtn" data-jump="2">Web</button>
-      <button class="navBtn" data-jump="3">Art</button>
-      <button class="navBtn" data-jump="4">Contact</button>
+      <nav class="nav" aria-label="Primary">
+        <button class="nav__btn is-active" data-goto="0">Home</button>
+        <button class="nav__btn" data-goto="1">Logos</button>
+        <button class="nav__btn" data-goto="2">Web Design</button>
+        <button class="nav__btn" data-goto="3">Art</button>
+        <button class="nav__btn" data-goto="4">Prices</button>
+        <button class="nav__btn" data-goto="5">Contact</button>
+      </nav>
     </div>
+  </header>
 
-    <div class="navHint" id="navHint">Scroll • Trackpad • Arrow keys</div>
-  </nav>
+  <!-- Slides -->
+  <main class="viewport" id="viewport">
+    <section class="slides" id="slides" aria-label="Portfolio slides">
 
-  <!-- Horizontal Slider -->
-  <main class="viewport" aria-label="Portfolio Slides">
-    <div class="slider" id="slider">
+      <!-- Slide 1: Home / About -->
+      <section class="slide slide--center" data-index="0" aria-label="Home">
+        <div class="panel panel--hero">
+          <div class="hero">
+            <div class="hero__logoWrap">
+              <img class="hero__logo" src="images/logo-7.webp" alt="Christina Mechelle Creates logo" />
+            </div>
 
-      <!-- 0) HOME / HERO -->
-      <section class="slide hero" data-slide="home">
-        <div class="heroInner">
-          <!-- Use your studio logo here if you have one -->
-          <img class="heroLogo" src="images/logo-salted-mill.webp" alt="Studio logo" />
+            <div class="hero__text">
+              <h1 class="hero__title">Christina Mechelle Creates</h1>
+              <p class="hero__sub">
+                Handcrafted design with a clean, modern-lux feel — logos, web design, and artwork built with intention.
+              </p>
 
-          <p class="heroAbout">
-            A curated design studio focused on luxury identity, web presence, and artwork.
-            Minimal, intentional, and built to feel like a gallery.
-          </p>
+              <div class="hero__cta">
+                <button class="btn btn--primary" data-goto="1">View Work</button>
+                <button class="btn btn--ghost" data-goto="5">Contact</button>
+              </div>
 
-          <div class="heroMeta" aria-label="Services">
-            <span>Identity</span>
-            <span>Web Design</span>
-            <span>Art</span>
+              <p class="hint">
+                <span class="hint__kbd">Scroll</span> to move slides • <span class="hint__kbd">Click</span> images to expand
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Logos (scrollable) -->
+      <section class="slide slide--scroll" data-index="1" aria-label="Logos">
+        <div class="panel">
+          <div class="panel__head">
+            <h2 class="panel__title">Logos</h2>
+            <p class="panel__desc">Scroll down to view all. Click any logo to expand full screen.</p>
           </div>
 
-          <div class="heroCTA">
-            <button class="ctaBtn" data-jump="1">View Work</button>
+          <div class="gallery" id="gallery-logos" aria-label="Logo gallery"></div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Web Design (scrollable) -->
+      <section class="slide slide--scroll" data-index="2" aria-label="Web Design">
+        <div class="panel">
+          <div class="panel__head">
+            <h2 class="panel__title">Web Design</h2>
+            <p class="panel__desc">Selected website projects. Click to expand.</p>
+          </div>
+
+          <div class="gallery gallery--web" id="gallery-web" aria-label="Web design gallery"></div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Art (scrollable) -->
+      <section class="slide slide--scroll" data-index="3" aria-label="Art">
+        <div class="panel">
+          <div class="panel__head">
+            <h2 class="panel__title">Art</h2>
+            <p class="panel__desc">Illustration, digital compositions, and creative sets. Click to expand.</p>
+          </div>
+
+          <div class="gallery gallery--art" id="gallery-art" aria-label="Art gallery"></div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Prices (scrollable) -->
+      <section class="slide slide--scroll" data-index="4" aria-label="Prices">
+        <div class="panel">
+          <div class="panel__head">
+            <h2 class="panel__title">Prices</h2>
+            <p class="panel__desc">Transparent pricing — click to view full screen.</p>
+          </div>
+
+          <div class="gallery gallery--prices" id="gallery-prices" aria-label="Pricing gallery"></div>
+        </div>
+      </section>
+
+      <!-- Slide 6: Contact -->
+      <section class="slide slide--center" data-index="5" aria-label="Contact">
+        <div class="panel panel--contact">
+          <div class="contact">
+            <div class="contact__left">
+              <h2 class="panel__title">Let’s build something.</h2>
+              <p class="panel__desc">
+                Tell me what you need — logo, website, or art — and I’ll follow up with next steps.
+              </p>
+
+              <div class="contact__meta">
+                <div class="metaCard">
+                  <div class="metaCard__label">Email</div>
+                  <div class="metaCard__value"><a href="mailto:EPG814@gmail.com">EPG814@gmail.com</a></div>
+                </div>
+                <div class="metaCard">
+                  <div class="metaCard__label">Phone</div>
+                  <div class="metaCard__value"><a href="tel:+15093039869">509.303.9869</a></div>
+                </div>
+              </div>
+            </div>
+
+            <form class="form" id="contactForm">
+              <div class="form__row">
+                <label class="form__label">Name</label>
+                <input class="form__input" name="name" autocomplete="name" placeholder="Your name" required />
+              </div>
+
+              <div class="form__row">
+                <label class="form__label">Email</label>
+                <input class="form__input" type="email" name="email" autocomplete="email" placeholder="you@email.com" required />
+              </div>
+
+              <div class="form__row">
+                <label class="form__label">What are you looking for?</label>
+                <select class="form__input" name="type">
+                  <option>Logo</option>
+                  <option>Website</option>
+                  <option>Art / Illustration</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="form__row">
+                <label class="form__label">Message</label>
+                <textarea class="form__input form__textarea" name="message" placeholder="Project details, timeline, any links..." required></textarea>
+              </div>
+
+              <button class="btn btn--primary btn--wide" type="submit">Send</button>
+
+              <p class="form__note">
+                This form opens your email client (no backend needed for GitHub Pages).
+              </p>
+            </form>
           </div>
         </div>
       </section>
 
-      <!-- 1) LOGOS GALLERY -->
-      <section class="slide gallerySlide" data-slide="logos">
-        <header class="slideHeader">
-          <h1>Logos</h1>
-          <p>Selected identity marks and brand systems.</p>
-        </header>
-
-        <div class="masonry" aria-label="Logos gallery">
-          <button class="tile isLogo logoBg-ivory tile-hero" type="button">
-            <img src="images/logo-salted-mill.webp" alt="Salted Mill" />
-          </button>
-
-          <button class="tile isLogo logoBg-charcoal tile-md" type="button">
-            <img src="images/logo-keenan-storage.webp" alt="Keenan Self Storage" />
-          </button>
-
-          <button class="tile isLogo logoBg-stone tile-md" type="button">
-            <img src="images/logo-fire-tigers.webp" alt="Fire Tigers" />
-          </button>
-
-          <button class="tile isLogo logoBg-ivory tile-sm" type="button">
-            <img src="images/logo-4-seasons.webp" alt="4 Seasons Finishing" />
-          </button>
-
-          <button class="tile isLogo logoBg-flat tile-sm matFrame" type="button">
-            <img src="images/logo-latinx-club.webp" alt="Latinx Club" />
-          </button>
-
-          <button class="tile isLogo logoBg-texture tile-hero" type="button">
-            <img src="images/logo-helm.webp" alt="Helm" />
-          </button>
-
-          <button class="tile isLogo logoBg-ivory tile-md" type="button">
-            <img src="images/logo-christina-mechelle.webp" alt="Christina Mechelle Creates" />
-          </button>
-        </div>
-      </section>
-
-      <!-- 2) WEB DESIGN GALLERY -->
-      <section class="slide gallerySlide" data-slide="web">
-        <header class="slideHeader">
-          <h1>Web Design</h1>
-          <p>Website screenshots and UI builds. Replace these with your own images in <span class="mono">/images</span>.</p>
-        </header>
-
-        <div class="masonry" aria-label="Web design gallery">
-          <!-- Replace these filenames with your real ones -->
-          <button class="tile tile-hero" type="button"><img src="images/web-01.webp" alt="Web project 01" /></button>
-          <button class="tile tile-md" type="button"><img src="images/web-02.webp" alt="Web project 02" /></button>
-          <button class="tile tile-sm" type="button"><img src="images/web-03.webp" alt="Web project 03" /></button>
-          <button class="tile tile-md" type="button"><img src="images/web-04.webp" alt="Web project 04" /></button>
-          <button class="tile tile-sm" type="button"><img src="images/web-05.webp" alt="Web project 05" /></button>
-        </div>
-      </section>
-
-      <!-- 3) ART GALLERY -->
-      <section class="slide gallerySlide" data-slide="art">
-        <header class="slideHeader">
-          <h1>Art</h1>
-          <p>Illustrations and personal pieces. Replace these with your own images in <span class="mono">/images</span>.</p>
-        </header>
-
-        <div class="masonry" aria-label="Art gallery">
-          <!-- Replace these filenames with your real ones -->
-          <button class="tile tile-md" type="button"><img src="images/art-01.webp" alt="Art 01" /></button>
-          <button class="tile tile-hero" type="button"><img src="images/art-02.webp" alt="Art 02" /></button>
-          <button class="tile tile-sm" type="button"><img src="images/art-03.webp" alt="Art 03" /></button>
-          <button class="tile tile-md" type="button"><img src="images/art-04.webp" alt="Art 04" /></button>
-          <button class="tile tile-sm" type="button"><img src="images/art-05.webp" alt="Art 05" /></button>
-        </div>
-      </section>
-
-      <!-- 4) CONTACT -->
-      <section class="slide contact" data-slide="contact">
-        <div class="contactInner">
-          <h1>Contact</h1>
-          <p class="contactSub">Available for select projects. Tell me what you’re building.</p>
-
-          <form class="contactForm" onsubmit="return false;">
-            <label>
-              <span>Name</span>
-              <input type="text" placeholder="Your name" autocomplete="name" />
-            </label>
-
-            <label>
-              <span>Email</span>
-              <input type="email" placeholder="you@email.com" autocomplete="email" />
-            </label>
-
-            <label>
-              <span>Message</span>
-              <textarea rows="5" placeholder="Project details, timeline, budget range..."></textarea>
-            </label>
-
-            <button class="sendBtn" type="submit">Send</button>
-            <div class="contactNote">Or email directly: <span class="mono">hello@studio.com</span></div>
-          </form>
-        </div>
-      </section>
-
-    </div>
+    </section>
   </main>
 
-  <!-- Fullscreen Viewer (click to open, click to close) -->
-  <div class="viewer" id="viewer" aria-hidden="true">
-    <button class="viewerClose" id="viewerClose" aria-label="Close fullscreen">✕</button>
-    <img id="viewerImg" alt="" />
+  <!-- Slide dots -->
+  <div class="dots" id="dots" aria-label="Slide navigation"></div>
+
+  <!-- Fullscreen modal -->
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <button class="modal__close" id="modalClose" aria-label="Close image">×</button>
+    <img class="modal__img" id="modalImg" alt="" />
+    <div class="modal__caption" id="modalCaption"></div>
   </div>
 
   <script src="script.js"></script>
