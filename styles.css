@@ -438,6 +438,24 @@ body{
   line-height: 1.4;
 }
 
+/* Contact: form-only layout */
+.contact--solo{
+  display:flex;
+  justify-content:center;
+}
+.form--solo{
+  width: min(620px, 100%);
+  margin: 0 auto;
+}
+.form--solo .panel__title{
+  margin-top: 0;
+}
+.form--solo .panel__desc{
+  margin-top: 6px;
+  margin-bottom: 16px;
+}
+
+
 /* ---------- Dots ---------- */
 .dots{
   position: fixed;
