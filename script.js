@@ -1,312 +1,248 @@
-/* =========================
-   Portfolio Slides + Gallery
-   ========================= */
+// ----------------------------
+// CONFIG: Update filenames here
+// ----------------------------
+// Put all images in /images/ (and optionally subfolders).
+// If you rename files later, just update these arrays.
 
-const slidesEl = document.getElementById("slides");
-const viewportEl = document.getElementById("viewport");
-const navButtons = Array.from(document.querySelectorAll(".nav__btn"));
-const dotsEl = document.getElementById("dots");
-
-const modal = document.getElementById("modal");
-const modalImg = document.getElementById("modalImg");
-const modalCaption = document.getElementById("modalCaption");
-const modalClose = document.getElementById("modalClose");
-
-const SLIDE_COUNT = 6;
-let current = 0;
-let isAnimating = false;
-
-/* ---------- Data ---------- */
-/* NOTE: These must match your /images/ filenames exactly. */
-const DATA = {
+const GALLERIES = {
   logos: [
-    { src: "images/logo-1.webp", label: "Salted Mill" },
-    { src: "images/logo-2.webp", label: "CMC" },
-    { src: "images/logo-3.webp", label: "Keenan Self Storage" },
-    { src: "images/logo-4.webp", label: "Latinx Club" },
-    { src: "images/logo-5.webp", label: "4 Seasons Finishings" },
-    { src: "images/logo-6.webp", label: "Fire Tigers" },
-    { src: "images/logo-7.webp", label: "Helm" },
+    // your final logos (examples — rename to match your repo)
+    "images/logos/logo-1.webp",
+    "images/logos/logo-2.webp",
+    "images/logos/logo-3.webp",
+    "images/logos/logo-4.webp",
+    "images/logos/logo-5.webp",
+    "images/logos/logo-6.webp",
+    "images/logos/logo-7.webp",
   ],
   web: [
-    { src: "images/CMC.webp", label: "CMC" },
-    { src: "images/DCF.webp", label: "DCF Sorting Hat" },
-    { src: "images/Shewa.webp", label: "Shewa" },
-    { src: "images/TWW.webp", label: "Walla Walla" },
-    { src: "images/WBM.webp", label: "WBM Ranch" },
+    "images/web/CMC.webp",
+    "images/web/DCF.webp",
+    "images/web/Shewa.webp",
+    "images/web/TWW.webp",
+    "images/web/WBM.webp",
   ],
   art: [
-    { src: "images/abstract.webp", label: "Abstract Portrait" },
-    { src: "images/bags.webp", label: "Birthday Bags Set" },
-    { src: "images/barb.webp", label: "Barb the Barbarian" },
-    { src: "images/fathers.webp", label: "Father’s Day" },
-    { src: "images/jesus.webp", label: "Sticker Set" },
-    { src: "images/korean.webp", label: "Korean Mama Project" },
-    { src: "images/osu.webp", label: "Walla Walla ♥ OSU" },
-    { src: "images/photobooth.webp", label: "Photo Booth Layouts" },
-    { src: "images/pride.webp", label: "Pride" },
-    { src: "images/tag.webp", label: "Gift Tags" },
+    "images/art/abstract.webp",
+    "images/art/bags.webp",
+    "images/art/barb.webp",
+    "images/art/fathers.webp",
+    "images/art/jesus.webp",
+    "images/art/korean.webp",
+    "images/art/osu.webp",
+    "images/art/photobooth.webp",
+    "images/art/pride.webp",
+    "images/art/tag.webp",
   ],
   prices: [
-    { src: "images/prices-personal.webp", label: "Personal Website" },
-    { src: "images/prices-business.webp", label: "Business Website" },
-    { src: "images/prices-addons.webp", label: "Add Ons" },
-    { src: "images/prices-hourly.webp", label: "Hourly" },
-  ],
+    // rename suggestions: personal.webp, business.webp, addons.webp, hourly.webp (or keep yours)
+    "images/prices/personal.webp",
+    "images/prices/business.webp",
+    "images/prices/addons.webp",
+    "images/prices/hourly.webp",
+  ]
 };
 
-/* ---------- Gallery Builder ---------- */
-function spanForIndex(i, mode) {
-  // A simple asymmetrical rhythm that looks like your inspo grid.
-  // Adjusted by mode so logos feel denser, web feels larger.
-  if (mode === "web") return [8, 4, 6, 6, 12][i % 5];
-  if (mode === "prices") return [6, 6, 6, 6][i % 4];
-  if (mode === "art") return [7, 5, 6, 6, 8, 4][i % 6];
-  // logos
-  return [6, 6, 4, 8, 6, 6, 12][i % 7];
+// ----------------------------
+// Slide logic
+// ----------------------------
+const deck = document.getElementById("deck");
+const slides = Array.from(document.querySelectorAll(".slide"));
+const navlinks = Array.from(document.querySelectorAll(".navlink"));
+
+let index = 0;
+let isAnimating = false;
+
+function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+function setActiveNav(i){
+  navlinks.forEach(a => a.classList.toggle("is-active", Number(a.dataset.slide) === i));
+  document.querySelectorAll(".dot").forEach((d, idx) => d.classList.toggle("is-active", idx === i));
 }
 
-function buildGallery(containerId, items, mode) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
+function goTo(i){
+  index = clamp(i, 0, slides.length - 1);
+  deck.style.transform = `translateX(-${index * 100}vw)`;
+  setActiveNav(index);
+}
 
-  const frag = document.createDocumentFragment();
+// Buttons in hero
+document.querySelectorAll("[data-goto]").forEach(btn => {
+  btn.addEventListener("click", () => goTo(Number(btn.dataset.goto)));
+});
 
-  items.forEach((item, i) => {
-    const span = spanForIndex(i, mode);
-    const tile = document.createElement("button");
-    tile.type = "button";
-    tile.className = `tile span-${span}`;
-    tile.setAttribute("aria-label", `Open ${item.label}`);
-    tile.dataset.full = item.src;
-    tile.dataset.caption = item.label;
-
-    const img = document.createElement("img");
-    img.className = "tile__img";
-    img.src = item.src;
-    img.alt = item.label;
-    img.loading = "lazy";
-
-    const label = document.createElement("div");
-    label.className = "tile__label";
-    label.innerHTML = `<span>${item.label}</span><span class="tile__hint">Click to expand</span>`;
-
-    tile.appendChild(img);
-    tile.appendChild(label);
-
-    tile.addEventListener("click", () => openModal(item.src, item.label));
-    frag.appendChild(tile);
+// Nav click
+navlinks.forEach(a => {
+  a.addEventListener("click", (e) => {
+    e.preventDefault();
+    goTo(Number(a.dataset.slide));
   });
-
-  el.innerHTML = "";
-  el.appendChild(frag);
-}
-
-/* ---------- Modal ---------- */
-function openModal(src, caption) {
-  modalImg.src = src;
-  modalImg.alt = caption || "";
-  modalCaption.textContent = caption || "";
-
-  modal.classList.add("is-open");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}
-
-function closeModal() {
-  modal.classList.remove("is-open");
-  modal.setAttribute("aria-hidden", "true");
-  modalImg.src = "";
-  modalCaption.textContent = "";
-  document.body.style.overflow = "hidden"; // body stays hidden; slides handle scroll
-}
-
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) closeModal();
-});
-modalClose.addEventListener("click", closeModal);
-
-window.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
 });
 
-/* ---------- Dots ---------- */
-function buildDots() {
+// ----------------------------
+// Bottom dots
+// ----------------------------
+const dotsEl = document.getElementById("dots");
+function buildDots(){
   dotsEl.innerHTML = "";
-  for (let i = 0; i < SLIDE_COUNT; i++) {
+  slides.forEach((_, i) => {
     const d = document.createElement("button");
+    d.className = "dot" + (i === 0 ? " is-active" : "");
     d.type = "button";
-    d.className = "dot" + (i === current ? " is-active" : "");
-    d.setAttribute("aria-label", `Go to slide ${i + 1}`);
+    d.setAttribute("aria-label", `Go to slide ${i+1}`);
     d.addEventListener("click", () => goTo(i));
     dotsEl.appendChild(d);
+  });
+}
+buildDots();
+
+// ----------------------------
+// Wheel handling:
+// - Horizontal wheel moves slides
+// - BUT if you are scrolling inside a scrollable gallery,
+//   it scrolls vertically and does NOT change slides.
+// ----------------------------
+function hasVerticalScroll(el){
+  return el && el.scrollHeight > el.clientHeight + 2;
+}
+
+function findScrollableTarget(startEl){
+  let el = startEl;
+  while (el && el !== document.body){
+    if (el.classList && el.classList.contains("scrollable")) return el;
+    el = el.parentElement;
   }
+  return null;
 }
 
-function syncNav() {
-  navButtons.forEach((b) => b.classList.remove("is-active"));
-  const active = navButtons.find((b) => Number(b.dataset.goto) === current);
-  if (active) active.classList.add("is-active");
+window.addEventListener("wheel", (e) => {
+  const scroller = findScrollableTarget(e.target);
 
-  const dots = Array.from(document.querySelectorAll(".dot"));
-  dots.forEach((d, i) => d.classList.toggle("is-active", i === current));
-}
+  // If cursor is over a scrollable area and it can scroll, let it scroll.
+  if (scroller && hasVerticalScroll(scroller)) {
+    // Only block slide navigation if there is room to scroll in the direction
+    const atTop = scroller.scrollTop <= 0;
+    const atBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 1;
 
-/* ---------- Slide Navigation ---------- */
-function goTo(idx) {
-  if (idx < 0 || idx >= SLIDE_COUNT) return;
+    const goingDown = e.deltaY > 0;
+    const goingUp = e.deltaY < 0;
+
+    if ((goingDown && !atBottom) || (goingUp && !atTop)) {
+      // allow the scroll inside gallery; don't change slides
+      return;
+    }
+    // If you're at the edge, allow slide navigation to kick in
+  }
+
+  // Slide navigation (throttled)
   if (isAnimating) return;
-
-  current = idx;
   isAnimating = true;
 
-  slidesEl.style.transform = `translateX(${-current * 100}vw)`;
+  if (e.deltaY > 0) goTo(index + 1);
+  else if (e.deltaY < 0) goTo(index - 1);
 
-  // reset scroll on new slide so user doesn't land mid-scroll
-  const nextSlide = document.querySelector(`.slide[data-index="${current}"]`);
-  if (nextSlide && nextSlide.classList.contains("slide--scroll")) {
-    nextSlide.scrollTo({ top: 0, behavior: "instant" });
-  }
-
-  syncNav();
-  setTimeout(() => (isAnimating = false), 700);
-}
-
-/* Hook nav buttons + hero CTA */
-navButtons.forEach((btn) => {
-  btn.addEventListener("click", () => goTo(Number(btn.dataset.goto)));
-});
-document.querySelectorAll("[data-goto]").forEach((btn) => {
-  btn.addEventListener("click", () => goTo(Number(btn.dataset.goto)));
-});
-
-/* ---------- Wheel/Trackpad Behavior ----------
-   Goal:
-   - Horizontal slide navigation by trackpad (deltaX)
-   - Vertical scroll inside gallery slides
-   - Still allow "slide to next" when user hits top/bottom of a scroll slide
----------------------------------------------- */
-function getActiveSlideEl() {
-  return document.querySelector(`.slide[data-index="${current}"]`);
-}
-
-function canScrollVertically(slideEl) {
-  if (!slideEl) return false;
-  return slideEl.classList.contains("slide--scroll") && slideEl.scrollHeight > slideEl.clientHeight + 2;
-}
-
-function atScrollEdge(slideEl, direction) {
-  // direction: 1 = down, -1 = up
-  const top = slideEl.scrollTop;
-  const max = slideEl.scrollHeight - slideEl.clientHeight;
-  if (direction > 0) return top >= max - 1;
-  return top <= 1;
-}
-
-let wheelLock = false;
-let wheelTimer = null;
-
-window.addEventListener(
-  "wheel",
-  (e) => {
-    if (modal.classList.contains("is-open")) return;
-
-    const slideEl = getActiveSlideEl();
-    const scrollable = canScrollVertically(slideEl);
-
-    const dx = e.deltaX;
-    const dy = e.deltaY;
-
-    const absX = Math.abs(dx);
-    const absY = Math.abs(dy);
-
-    // If user is clearly doing a horizontal gesture, navigate slides.
-    const horizontalIntent = absX > 20 && absX > absY * 1.1;
-
-    // Otherwise, treat dy as slide navigation ONLY when:
-    // - current slide is not scrollable OR
-    // - current slide is scrollable but user is at top/bottom edge
-    const verticalNavigateAllowed =
-      !scrollable ||
-      (scrollable && atScrollEdge(slideEl, dy > 0 ? 1 : -1));
-
-    if (wheelLock) {
-      e.preventDefault();
-      return;
-    }
-
-    if (horizontalIntent) {
-      e.preventDefault();
-      wheelLock = true;
-      if (dx > 0) goTo(current + 1);
-      else goTo(current - 1);
-    } else if (verticalNavigateAllowed) {
-      // Only intercept if dy is meaningful (prevents tiny trackpad jitter)
-      if (absY > 30) {
-        e.preventDefault();
-        wheelLock = true;
-        if (dy > 0) goTo(current + 1);
-        else goTo(current - 1);
-      }
-    } else {
-      // Let the slide scroll normally
-      return;
-    }
-
-    clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(() => (wheelLock = false), 650);
-  },
-  { passive: false }
-);
-
-/* ---------- Touch Swipe (mobile) ---------- */
-let touchStartX = 0;
-let touchStartY = 0;
-
-window.addEventListener("touchstart", (e) => {
-  if (modal.classList.contains("is-open")) return;
-  const t = e.touches[0];
-  touchStartX = t.clientX;
-  touchStartY = t.clientY;
+  setTimeout(() => { isAnimating = false; }, 520);
 }, { passive: true });
 
-window.addEventListener("touchend", (e) => {
-  if (modal.classList.contains("is-open")) return;
+// Keyboard navigation
+window.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") goTo(index + 1);
+  if (e.key === "ArrowLeft") goTo(index - 1);
+});
 
-  const t = e.changedTouches[0];
-  const dx = t.clientX - touchStartX;
-  const dy = t.clientY - touchStartY;
+// ----------------------------
+// Build galleries
+// ----------------------------
+function spanClass(i){
+  // A little visual variety like your reference grid
+  if (i % 7 === 0) return "span-12";
+  if (i % 5 === 0) return "span-6";
+  return ""; // default span-4 via CSS
+}
 
-  // prioritize horizontal swipe
-  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.1) {
-    if (dx < 0) goTo(current + 1);
-    else goTo(current - 1);
-  }
-}, { passive: true });
+function buildGallery(name){
+  const el = document.querySelector(`[data-gallery="${name}"]`);
+  if (!el) return;
 
-/* ---------- Contact Form (mailto for GitHub Pages) ---------- */
-document.getElementById("contactForm").addEventListener("submit", (e) => {
+  el.innerHTML = "";
+  const files = GALLERIES[name] || [];
+
+  files.forEach((src, i) => {
+    const card = document.createElement("div");
+    card.className = `card ${spanClass(i)}`.trim();
+
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = `${name} item ${i+1}`;
+    img.loading = "lazy";
+
+    card.appendChild(img);
+    el.appendChild(card);
+
+    card.addEventListener("click", () => openLightbox(src, img.alt));
+  });
+}
+
+Object.keys(GALLERIES).forEach(buildGallery);
+
+// ----------------------------
+// Lightbox
+// ----------------------------
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const lightboxClose = document.getElementById("lightboxClose");
+
+function openLightbox(src, alt){
+  lightboxImg.src = src;
+  lightboxImg.alt = alt || "";
+  lightbox.classList.add("is-open");
+  lightbox.setAttribute("aria-hidden", "false");
+}
+
+function closeLightbox(){
+  lightbox.classList.remove("is-open");
+  lightbox.setAttribute("aria-hidden", "true");
+  lightboxImg.src = "";
+}
+
+lightboxClose.addEventListener("click", closeLightbox);
+lightbox.addEventListener("click", (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeLightbox();
+});
+
+// ----------------------------
+// Contact form: mailto (no personal info shown on page)
+// ----------------------------
+const contactForm = document.getElementById("contactForm");
+
+// Change this to your email:
+const DEST_EMAIL = "epg814@gmail.com";
+
+contactForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const form = e.currentTarget;
-  const name = form.name.value.trim();
-  const email = form.email.value.trim();
-const subject = encodeURIComponent(`Inquiry — ${name}`);
-const body = encodeURIComponent(
-  `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n`
-);
+  const fd = new FormData(contactForm);
+  const name = (fd.get("name") || "").toString().trim();
+  const email = (fd.get("email") || "").toString().trim();
+  const service = (fd.get("service") || "").toString().trim();
+  const message = (fd.get("message") || "").toString().trim();
 
+  const subject = encodeURIComponent(`New inquiry: ${service || "Project"} (${name || "No name"})`);
+  const body = encodeURIComponent(
+`Name: ${name}
+Email: ${email}
+Service: ${service}
 
-  // Change to your preferred email if needed
-  window.location.href = `mailto:EPG814@gmail.com?subject=${subject}&body=${body}`;
+Details:
+${message}
+`
+  );
+
+  window.location.href = `mailto:${DEST_EMAIL}?subject=${subject}&body=${body}`;
 });
 
-/* ---------- Init ---------- */
-buildGallery("gallery-logos", DATA.logos, "logos");
-buildGallery("gallery-web", DATA.web, "web");
-buildGallery("gallery-art", DATA.art, "art");
-buildGallery("gallery-prices", DATA.prices, "prices");
-
-buildDots();
-syncNav();
+// Start on slide 0
 goTo(0);
