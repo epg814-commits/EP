@@ -1,198 +1,170 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studio EL</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <!-- Matte lux background texture -->
-  <div class="bg-matte" aria-hidden="true"></div>
+  <!-- Matte / vignette background layers -->
+  <div class="bg" aria-hidden="true"></div>
 
-  <!-- Top nav -->
+  <!-- NAV (links only, aligned right) -->
   <header class="topbar">
-    <div class="topbar__inner">
-      <div class="brand">
-        <span class="brand__dot"></span>
-        <span class="brand__name">Studio EL</span>
-      </div>
-
-      <nav class="nav" aria-label="Primary">
-        <button class="nav__btn is-active" data-goto="0">Home</button>
-        <button class="nav__btn" data-goto="1">Logos</button>
-        <button class="nav__btn" data-goto="2">Web Design</button>
-        <button class="nav__btn" data-goto="3">Art</button>
-        <button class="nav__btn" data-goto="4">Prices</button>
-        <button class="nav__btn" data-goto="5">Contact</button>
-      </nav>
-    </div>
+    <nav class="navlinks" aria-label="Primary">
+      <a href="#home" data-slide="0" class="navlink is-active">Home</a>
+      <a href="#logos" data-slide="1" class="navlink">Logos</a>
+      <a href="#web" data-slide="2" class="navlink">Web Design</a>
+      <a href="#art" data-slide="3" class="navlink">Art</a>
+      <a href="#prices" data-slide="4" class="navlink">Prices</a>
+      <a href="#contact" data-slide="5" class="navlink">Contact</a>
+    </nav>
   </header>
 
-  <!-- Slides -->
-  <main class="viewport" id="viewport">
-    <section class="slides" id="slides" aria-label="Portfolio slides">
+  <!-- SLIDES WRAPPER -->
+  <main class="deck" id="deck" aria-label="Slides">
+    <!-- Slide 0: HOME / HERO -->
+    <section class="slide hero" id="home" data-index="0">
+      <div class="panel hero-panel">
+        <div class="hero-grid">
+          <div class="hero-logoCard">
+            <!-- Put your main hero logo here -->
+            <img class="hero-logo" src="images/hero-logo.webp" alt="Studio EL Logo">
+          </div>
 
-      <!-- Slide 1: Home / About -->
-      <section class="slide slide--center" data-index="0" aria-label="Home">
-        <div class="panel panel--hero">
-          <div class="hero">
-            <div class="hero__logoWrap">
-              <img class="hero__logo" src="images/SELogo.webp" alt=" Studio EL" />
+          <div class="hero-copy">
+            <h1 class="hero-title">Studio EL</h1>
+            <p class="hero-sub">
+              Handcrafted design with a clean, modern-lux feel — logos, web design, and artwork built with intention.
+            </p>
+
+            <div class="hero-cta">
+              <button class="btn btn-primary" data-goto="1">View Work</button>
+              <button class="btn btn-ghost" data-goto="5">Contact</button>
             </div>
 
-            <div class="hero__text">
-              <h1 class="hero__title">Studio L</h1>
-              <p class="hero__sub">
-                Handcrafted design with a clean, modern-lux feel — logos, web design, and artwork built with intention.
-              </p>
-
-              <div class="hero__cta">
-                <button class="btn btn--primary" data-goto="1">View Work</button>
-                <button class="btn btn--ghost" data-goto="5">Contact</button>
-              </div>
-
-              <p class="hint">
-                <span class="hint__kbd">Scroll</span> to move slides • <span class="hint__kbd">Click</span> images to expand
-              </p>
+            <div class="helper">
+              <span class="pill">Scroll</span> to move slides • <span class="pill">Scroll inside galleries</span> to see more • <span class="pill">Click</span> images to expand
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Slide 2: Logos (scrollable) -->
-      <section class="slide slide--scroll" data-index="1" aria-label="Logos">
-        <div class="panel">
-          <div class="panel__head">
-            <h2 class="panel__title">Logos</h2>
-            <p class="panel__desc">Scroll down to view all. Click any logo to expand full screen.</p>
-          </div>
+    <!-- Slide 1: LOGOS -->
+    <section class="slide" id="logos" data-index="1">
+      <div class="panel">
+        <header class="section-head">
+          <h2>Logos</h2>
+          <p>Selected identity work — click any piece to view full screen.</p>
+        </header>
 
-          <div class="gallery" id="gallery-logos" aria-label="Logo gallery"></div>
+        <div class="gallery scrollable" data-gallery="logos">
+          <!-- JS injects items -->
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Slide 3: Web Design (scrollable) -->
-      <section class="slide slide--scroll" data-index="2" aria-label="Web Design">
-        <div class="panel">
-          <div class="panel__head">
-            <h2 class="panel__title">Web Design</h2>
-            <p class="panel__desc">Selected website projects. Click to expand.</p>
-          </div>
+    <!-- Slide 2: WEB DESIGN -->
+    <section class="slide" id="web" data-index="2">
+      <div class="panel">
+        <header class="section-head">
+          <h2>Web Design</h2>
+          <p>Landing pages, small business sites, and modern layouts.</p>
+        </header>
 
-          <div class="gallery gallery--web" id="gallery-web" aria-label="Web design gallery"></div>
+        <div class="gallery scrollable" data-gallery="web">
+          <!-- JS injects items -->
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Slide 4: Art (scrollable) -->
-      <section class="slide slide--scroll" data-index="3" aria-label="Art">
-        <div class="panel">
-          <div class="panel__head">
-            <h2 class="panel__title">Art</h2>
-            <p class="panel__desc">Illustration, digital compositions, and creative sets. Click to expand.</p>
-          </div>
+    <!-- Slide 3: ART -->
+    <section class="slide" id="art" data-index="3">
+      <div class="panel">
+        <header class="section-head">
+          <h2>Art</h2>
+          <p>Illustration, posters, and experimental design.</p>
+        </header>
 
-          <div class="gallery gallery--art" id="gallery-art" aria-label="Art gallery"></div>
+        <div class="gallery scrollable" data-gallery="art">
+          <!-- JS injects items -->
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Slide 5: Prices (scrollable) -->
-      <section class="slide slide--scroll" data-index="4" aria-label="Prices">
-        <div class="panel">
-          <div class="panel__head">
-            <h2 class="panel__title">Prices</h2>
-            <p class="panel__desc">Transparent pricing — click to view full screen.</p>
-          </div>
+    <!-- Slide 4: PRICES -->
+    <section class="slide" id="prices" data-index="4">
+      <div class="panel">
+        <header class="section-head">
+          <h2>Prices</h2>
+          <p>Quick guide — click to enlarge.</p>
+        </header>
 
-          <div class="gallery gallery--prices" id="gallery-prices" aria-label="Pricing gallery"></div>
+        <div class="gallery scrollable" data-gallery="prices">
+          <!-- JS injects items -->
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Slide 6: Contact -->
-      <!-- Slide 6: Contact (form only) -->
-<section class="slide slide--center" data-index="5" aria-label="Contact">
-  <div class="panel panel--contact">
-    <div class="contact contact--solo">
-      <form class="form form--solo" id="contactForm">
-        <h2 class="panel__title">Let’s build something.</h2>
-        <p class="panel__desc">
-          Tell me what you need — logo, website, or art — and I’ll follow up with next steps.
-        </p>
+    <!-- Slide 5: CONTACT -->
+    <section class="slide" id="contact" data-index="5">
+      <div class="panel contact-panel">
+        <header class="section-head">
+          <h2>Let’s build something.</h2>
+          <p>Tell me what you need — logo, website, or art — and I’ll follow up with next steps.</p>
+        </header>
 
-        <div class="form__row">
-          <label class="form__label">Name</label>
-          <input class="form__input" name="name" autocomplete="name" placeholder="Your name" required />
-        </div>
+        <form class="contactForm" id="contactForm">
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" placeholder="Your name" required>
+          </label>
 
-        <div class="form__row">
-          <label class="form__label">Email</label>
-          <input class="form__input" type="email" name="email" autocomplete="email" placeholder="you@email.com" required />
-        </div>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@email.com" required>
+          </label>
 
-        <div class="form__row">
-          <label class="form__label">Message</label>
-          <textarea class="form__input form__textarea" name="message" placeholder="Project details, timeline, any links..." required></textarea>
-        </div>
+          <label>
+            <span>What are you looking for?</span>
+            <select name="service" required>
+              <option value="" disabled selected>Select one…</option>
+              <option value="Logo">Logo</option>
+              <option value="Website">Website</option>
+              <option value="Art">Art</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
 
-        <button class="btn btn--primary btn--wide" type="submit">Send</button>
+          <label>
+            <span>Details</span>
+            <textarea name="message" rows="5" placeholder="Tell me a little about the project…" required></textarea>
+          </label>
 
-       <!-- <p class="form__note">
-          write notes here below form
-        </p> -->
-      </form>
-    </div>
-  </div>
-</section>
+          <button class="btn btn-primary btn-wide" type="submit">Send</button>
 
-
-            <form class="form" id="contactForm">
-              <div class="form__row">
-                <label class="form__label">Name</label>
-                <input class="form__input" name="name" autocomplete="name" placeholder="Your name" required />
-              </div>
-
-              <div class="form__row">
-                <label class="form__label">Email</label>
-                <input class="form__input" type="email" name="email" autocomplete="email" placeholder="you@email.com" required />
-              </div>
-
-              <div class="form__row">
-                <label class="form__label">What are you looking for?</label>
-                <select class="form__input" name="type">
-                  <option>Logo</option>
-                  <option>Website</option>
-                  <option>Art / Illustration</option>
-                  <option>Other</option>
-                </select>
-              </div>
-
-              <div class="form__row">
-                <label class="form__label">Message</label>
-                <textarea class="form__input form__textarea" name="message" placeholder="Project details, timeline, any links..." required></textarea>
-              </div>
-
-              <button class="btn btn--primary btn--wide" type="submit">Send</button>
-
-             <!-- <p class="form__note">
-             place any note at the bottom of the form
-              </p> -->
-            </form>
-          </div>
-        </div>
-      </section>
-
+          <!-- No personal info block here (removed) -->
+        </form>
+      </div>
     </section>
   </main>
 
-  <!-- Slide dots -->
-  <div class="dots" id="dots" aria-label="Slide navigation"></div>
+  <!-- Bottom dots -->
+  <div class="dots" id="dots" aria-label="Slide navigation dots"></div>
 
-  <!-- Fullscreen modal -->
-  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-label="Image viewer">
-    <button class="modal__close" id="modalClose" aria-label="Close image">×</button>
-    <img class="modal__img" id="modalImg" alt="" />
-    <div class="modal__caption" id="modalCaption"></div>
+  <!-- Fullscreen viewer -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+    <img class="lightbox-img" id="lightboxImg" alt="">
   </div>
 
   <script src="script.js"></script>
