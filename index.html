@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Studio Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
 
-  <!-- Fonts (luxury + readable UI) -->
+  <!-- Luxury + readable pairing -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -15,13 +15,11 @@
 <body>
 
   <!-- Top Nav -->
-  <nav class="nav">
-    <button class="brand" data-jump="0" aria-label="Go to Home">
-      Studio
-    </button>
+  <nav class="nav" aria-label="Primary">
+    <button class="brand" data-jump="0" aria-label="Go to Home">Studio</button>
 
-    <div class="navLinks">
-      <button class="navBtn" data-jump="0">Home</button>
+    <div class="navLinks" role="tablist" aria-label="Sections">
+      <button class="navBtn active" data-jump="0">Home</button>
       <button class="navBtn" data-jump="1">Logos</button>
       <button class="navBtn" data-jump="2">Web</button>
       <button class="navBtn" data-jump="3">Art</button>
@@ -32,13 +30,13 @@
   </nav>
 
   <!-- Horizontal Slider -->
-  <main class="viewport">
+  <main class="viewport" aria-label="Portfolio Slides">
     <div class="slider" id="slider">
 
       <!-- 0) HOME / HERO -->
       <section class="slide hero" data-slide="home">
         <div class="heroInner">
-          <!-- Replace with your main studio logo if you have one -->
+          <!-- Use your studio logo here if you have one -->
           <img class="heroLogo" src="images/logo-salted-mill.webp" alt="Studio logo" />
 
           <p class="heroAbout">
@@ -46,10 +44,14 @@
             Minimal, intentional, and built to feel like a gallery.
           </p>
 
-          <div class="heroMeta">
+          <div class="heroMeta" aria-label="Services">
             <span>Identity</span>
             <span>Web Design</span>
             <span>Art</span>
+          </div>
+
+          <div class="heroCTA">
+            <button class="ctaBtn" data-jump="1">View Work</button>
           </div>
         </div>
       </section>
@@ -61,34 +63,32 @@
           <p>Selected identity marks and brand systems.</p>
         </header>
 
-        <div class="masonry">
-          <!-- Your uploaded final logos -->
-          <button class="tile logoBg-ivory tile-hero" type="button">
+        <div class="masonry" aria-label="Logos gallery">
+          <button class="tile isLogo logoBg-ivory tile-hero" type="button">
             <img src="images/logo-salted-mill.webp" alt="Salted Mill" />
           </button>
 
-          <button class="tile logoBg-charcoal tile-md" type="button">
+          <button class="tile isLogo logoBg-charcoal tile-md" type="button">
             <img src="images/logo-keenan-storage.webp" alt="Keenan Self Storage" />
           </button>
 
-          <button class="tile logoBg-stone tile-md" type="button">
+          <button class="tile isLogo logoBg-stone tile-md" type="button">
             <img src="images/logo-fire-tigers.webp" alt="Fire Tigers" />
           </button>
 
-          <button class="tile logoBg-ivory tile-sm" type="button">
+          <button class="tile isLogo logoBg-ivory tile-sm" type="button">
             <img src="images/logo-4-seasons.webp" alt="4 Seasons Finishing" />
           </button>
 
-          <button class="tile logoBg-flat tile-sm matFrame" type="button">
+          <button class="tile isLogo logoBg-flat tile-sm matFrame" type="button">
             <img src="images/logo-latinx-club.webp" alt="Latinx Club" />
           </button>
 
-          <!-- Texture hero (make sure you add images/greige-texture.webp for best effect) -->
-          <button class="tile logoBg-texture tile-hero" type="button">
+          <button class="tile isLogo logoBg-texture tile-hero" type="button">
             <img src="images/logo-helm.webp" alt="Helm" />
           </button>
 
-          <button class="tile logoBg-ivory tile-md" type="button">
+          <button class="tile isLogo logoBg-ivory tile-md" type="button">
             <img src="images/logo-christina-mechelle.webp" alt="Christina Mechelle Creates" />
           </button>
         </div>
@@ -98,11 +98,11 @@
       <section class="slide gallerySlide" data-slide="web">
         <header class="slideHeader">
           <h1>Web Design</h1>
-          <p>Website screenshots and UI builds. Replace placeholders with your files.</p>
+          <p>Website screenshots and UI builds. Replace these with your own images in <span class="mono">/images</span>.</p>
         </header>
 
-        <div class="masonry">
-          <!-- Replace these with your screenshots: images/web-01.webp, etc -->
+        <div class="masonry" aria-label="Web design gallery">
+          <!-- Replace these filenames with your real ones -->
           <button class="tile tile-hero" type="button"><img src="images/web-01.webp" alt="Web project 01" /></button>
           <button class="tile tile-md" type="button"><img src="images/web-02.webp" alt="Web project 02" /></button>
           <button class="tile tile-sm" type="button"><img src="images/web-03.webp" alt="Web project 03" /></button>
@@ -115,11 +115,11 @@
       <section class="slide gallerySlide" data-slide="art">
         <header class="slideHeader">
           <h1>Art</h1>
-          <p>Illustrations, posters, and personal pieces. Replace placeholders with your files.</p>
+          <p>Illustrations and personal pieces. Replace these with your own images in <span class="mono">/images</span>.</p>
         </header>
 
-        <div class="masonry">
-          <!-- Replace these with your art: images/art-01.webp, etc -->
+        <div class="masonry" aria-label="Art gallery">
+          <!-- Replace these filenames with your real ones -->
           <button class="tile tile-md" type="button"><img src="images/art-01.webp" alt="Art 01" /></button>
           <button class="tile tile-hero" type="button"><img src="images/art-02.webp" alt="Art 02" /></button>
           <button class="tile tile-sm" type="button"><img src="images/art-03.webp" alt="Art 03" /></button>
@@ -159,9 +159,9 @@
     </div>
   </main>
 
-  <!-- Fullscreen viewer -->
+  <!-- Fullscreen Viewer (click to open, click to close) -->
   <div class="viewer" id="viewer" aria-hidden="true">
-    <button class="viewerClose" id="viewerClose" aria-label="Close">✕</button>
+    <button class="viewerClose" id="viewerClose" aria-label="Close fullscreen">✕</button>
     <img id="viewerImg" alt="" />
   </div>
 
