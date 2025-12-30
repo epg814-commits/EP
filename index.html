@@ -4,57 +4,167 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Studio Portfolio</title>
+
+  <!-- Fonts (luxury + readable UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<nav class="nav">
-  <span>Studio</span>
-  <ul>
-    <li>Work</li>
-    <li>About</li>
-    <li>Contact</li>
-  </ul>
-</nav>
+  <!-- Top Nav -->
+  <nav class="nav">
+    <button class="brand" data-jump="0" aria-label="Go to Home">
+      Studio
+    </button>
 
-<div class="slider">
-
-  <!-- HERO LOGO -->
-  <section class="slide logo ivory hero">
-    <img src="images/logo-salted-mill.webp" alt="Salted Mill" />
-  </section>
-
-  <!-- WEB / SCREENSHOT -->
-  <section class="slide work">
-    <img src="images/work-01.jpg" alt="Website project" />
-  </section>
-
-  <!-- MEDIUM LOGO -->
-  <section class="slide logo stone md">
-    <img src="images/logo-fire-tigers.webp" alt="Fire Tigers" />
-  </section>
-
-  <!-- STANDARD LOGO -->
-  <section class="slide logo ivory sm">
-    <img src="images/logo-4-seasons.webp" alt="4 Seasons Finishing" />
-  </section>
-
-  <!-- HERO TEXTURE LOGO -->
-  <section class="slide logo texture hero">
-    <img src="images/logo-helm.webp" alt="Helm Maritime" />
-  </section>
-
-  <!-- CONTACT -->
-  <section class="slide contact">
-    <div>
-      <h1>Available for select projects</h1>
-      <p>hello@studio.com</p>
+    <div class="navLinks">
+      <button class="navBtn" data-jump="0">Home</button>
+      <button class="navBtn" data-jump="1">Logos</button>
+      <button class="navBtn" data-jump="2">Web</button>
+      <button class="navBtn" data-jump="3">Art</button>
+      <button class="navBtn" data-jump="4">Contact</button>
     </div>
-  </section>
 
-</div>
+    <div class="navHint" id="navHint">Scroll • Trackpad • Arrow keys</div>
+  </nav>
 
+  <!-- Horizontal Slider -->
+  <main class="viewport">
+    <div class="slider" id="slider">
 
-<script src="script.js"></script>
+      <!-- 0) HOME / HERO -->
+      <section class="slide hero" data-slide="home">
+        <div class="heroInner">
+          <!-- Replace with your main studio logo if you have one -->
+          <img class="heroLogo" src="images/logo-salted-mill.webp" alt="Studio logo" />
+
+          <p class="heroAbout">
+            A curated design studio focused on luxury identity, web presence, and artwork.
+            Minimal, intentional, and built to feel like a gallery.
+          </p>
+
+          <div class="heroMeta">
+            <span>Identity</span>
+            <span>Web Design</span>
+            <span>Art</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1) LOGOS GALLERY -->
+      <section class="slide gallerySlide" data-slide="logos">
+        <header class="slideHeader">
+          <h1>Logos</h1>
+          <p>Selected identity marks and brand systems.</p>
+        </header>
+
+        <div class="masonry">
+          <!-- Your uploaded final logos -->
+          <button class="tile logoBg-ivory tile-hero" type="button">
+            <img src="images/logo-salted-mill.webp" alt="Salted Mill" />
+          </button>
+
+          <button class="tile logoBg-charcoal tile-md" type="button">
+            <img src="images/logo-keenan-storage.webp" alt="Keenan Self Storage" />
+          </button>
+
+          <button class="tile logoBg-stone tile-md" type="button">
+            <img src="images/logo-fire-tigers.webp" alt="Fire Tigers" />
+          </button>
+
+          <button class="tile logoBg-ivory tile-sm" type="button">
+            <img src="images/logo-4-seasons.webp" alt="4 Seasons Finishing" />
+          </button>
+
+          <button class="tile logoBg-flat tile-sm matFrame" type="button">
+            <img src="images/logo-latinx-club.webp" alt="Latinx Club" />
+          </button>
+
+          <!-- Texture hero (make sure you add images/greige-texture.webp for best effect) -->
+          <button class="tile logoBg-texture tile-hero" type="button">
+            <img src="images/logo-helm.webp" alt="Helm" />
+          </button>
+
+          <button class="tile logoBg-ivory tile-md" type="button">
+            <img src="images/logo-christina-mechelle.webp" alt="Christina Mechelle Creates" />
+          </button>
+        </div>
+      </section>
+
+      <!-- 2) WEB DESIGN GALLERY -->
+      <section class="slide gallerySlide" data-slide="web">
+        <header class="slideHeader">
+          <h1>Web Design</h1>
+          <p>Website screenshots and UI builds. Replace placeholders with your files.</p>
+        </header>
+
+        <div class="masonry">
+          <!-- Replace these with your screenshots: images/web-01.webp, etc -->
+          <button class="tile tile-hero" type="button"><img src="images/web-01.webp" alt="Web project 01" /></button>
+          <button class="tile tile-md" type="button"><img src="images/web-02.webp" alt="Web project 02" /></button>
+          <button class="tile tile-sm" type="button"><img src="images/web-03.webp" alt="Web project 03" /></button>
+          <button class="tile tile-md" type="button"><img src="images/web-04.webp" alt="Web project 04" /></button>
+          <button class="tile tile-sm" type="button"><img src="images/web-05.webp" alt="Web project 05" /></button>
+        </div>
+      </section>
+
+      <!-- 3) ART GALLERY -->
+      <section class="slide gallerySlide" data-slide="art">
+        <header class="slideHeader">
+          <h1>Art</h1>
+          <p>Illustrations, posters, and personal pieces. Replace placeholders with your files.</p>
+        </header>
+
+        <div class="masonry">
+          <!-- Replace these with your art: images/art-01.webp, etc -->
+          <button class="tile tile-md" type="button"><img src="images/art-01.webp" alt="Art 01" /></button>
+          <button class="tile tile-hero" type="button"><img src="images/art-02.webp" alt="Art 02" /></button>
+          <button class="tile tile-sm" type="button"><img src="images/art-03.webp" alt="Art 03" /></button>
+          <button class="tile tile-md" type="button"><img src="images/art-04.webp" alt="Art 04" /></button>
+          <button class="tile tile-sm" type="button"><img src="images/art-05.webp" alt="Art 05" /></button>
+        </div>
+      </section>
+
+      <!-- 4) CONTACT -->
+      <section class="slide contact" data-slide="contact">
+        <div class="contactInner">
+          <h1>Contact</h1>
+          <p class="contactSub">Available for select projects. Tell me what you’re building.</p>
+
+          <form class="contactForm" onsubmit="return false;">
+            <label>
+              <span>Name</span>
+              <input type="text" placeholder="Your name" autocomplete="name" />
+            </label>
+
+            <label>
+              <span>Email</span>
+              <input type="email" placeholder="you@email.com" autocomplete="email" />
+            </label>
+
+            <label>
+              <span>Message</span>
+              <textarea rows="5" placeholder="Project details, timeline, budget range..."></textarea>
+            </label>
+
+            <button class="sendBtn" type="submit">Send</button>
+            <div class="contactNote">Or email directly: <span class="mono">hello@studio.com</span></div>
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Fullscreen viewer -->
+  <div class="viewer" id="viewer" aria-hidden="true">
+    <button class="viewerClose" id="viewerClose" aria-label="Close">✕</button>
+    <img id="viewerImg" alt="" />
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
