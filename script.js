@@ -291,13 +291,11 @@ document.getElementById("contactForm").addEventListener("submit", (e) => {
   const form = e.currentTarget;
   const name = form.name.value.trim();
   const email = form.email.value.trim();
-  const type = form.type.value.trim();
-  const message = form.message.value.trim();
+const subject = encodeURIComponent(`Inquiry — ${name}`);
+const body = encodeURIComponent(
+  `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n`
+);
 
-  const subject = encodeURIComponent(`Inquiry: ${type} — ${name}`);
-  const body = encodeURIComponent(
-    `Name: ${name}\nEmail: ${email}\nType: ${type}\n\nMessage:\n${message}\n`
-  );
 
   // Change to your preferred email if needed
   window.location.href = `mailto:EPG814@gmail.com?subject=${subject}&body=${body}`;
