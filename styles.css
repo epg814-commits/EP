@@ -60,3 +60,61 @@ body {
   color: #f5f2ed;
   text-align: center;
 }
+/* ---------------- LOGO SLIDES ---------------- */
+
+.slide.logo {
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+/* background system */
+.slide.logo.ivory { background: #F4F1EC; }
+.slide.logo.stone { background: #E6E2DA; }
+.slide.logo.charcoal { background: #1C1B19; }
+.slide.logo.texture {
+  background-image: url("images/greige-texture.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+/* mat / frame */
+.slide.logo::before {
+  content: "";
+  position: absolute;
+  inset: 60px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.06);
+  pointer-events: none;
+}
+
+.slide.logo.charcoal::before {
+  border-color: rgba(255,255,255,0.08);
+}
+
+/* logo image behavior */
+.slide.logo img {
+  width: 70%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* sizing hierarchy */
+.slide.logo.hero img { width: 78%; }
+.slide.logo.md img { width: 68%; }
+.slide.logo.sm img { width: 60%; }
+
+/* ---------------- WORK SLIDES ---------------- */
+
+.slide.work img {
+  width: 85%;
+  height: auto;
+}
+
+/* ---------------- CONTACT ---------------- */
+
+.slide.contact {
+  background: #111;
+  color: #f5f2ed;
+}
+
