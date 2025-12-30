@@ -14,14 +14,16 @@
   --gap: 22px;
 }
 
+html, body { height: 100%; }
+
 body{
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: var(--bg);
   color: var(--ink);
-  overflow: hidden;
+  overflow: hidden; /* important: only slides scroll, not body */
 }
 
-h1,h2{
+h1{
   font-family: "Cormorant Garamond", serif;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -48,33 +50,8 @@ h1,h2{
   padding: 120px 64px 64px;
   position: relative;
 }
-/* Allow vertical scrolling on gallery slides */
-.slide.gallerySlide {
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding-bottom: 120px; /* breathing room for last row */
-}
 
-/* Make scrollbar subtle (luxury feel) */
-.slide.gallerySlide::-webkit-scrollbar {
-  width: 8px;
-}
-
-.slide.gallerySlide::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.slide.gallerySlide::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.12);
-  border-radius: 999px;
-}
-
-.slide.gallerySlide::-webkit-scrollbar-thumb:hover {
-  background: rgba(0,0,0,0.18);
-}
-
-
-/* ---------- NAV ---------- */
+/* ---------------- NAV ---------------- */
 .nav{
   position: fixed;
   top: 28px;
@@ -136,7 +113,7 @@ h1,h2{
   letter-spacing: 0.02em;
 }
 
-/* ---------- HERO ---------- */
+/* ---------------- HERO ---------------- */
 .hero{
   display: grid;
   place-items: center;
@@ -182,7 +159,23 @@ h1,h2{
   background: rgba(255,255,255,0.5);
 }
 
-/* ---------- SECTION HEADER ---------- */
+.heroCTA{
+  margin-top: 6px;
+}
+
+.ctaBtn{
+  border: 1px solid rgba(0,0,0,0.10);
+  background: rgba(255,255,255,0.55);
+  border-radius: 999px;
+  padding: 12px 16px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+}
+.ctaBtn:hover{
+  background: rgba(255,255,255,0.75);
+}
+
+/* ---------------- HEADERS ---------------- */
 .slideHeader{
   width: min(1100px, 92vw);
   margin: 0 auto 22px;
@@ -201,7 +194,30 @@ h1,h2{
   max-width: 70ch;
 }
 
-/* ---------- MASONRY (like your reference image) ---------- */
+.mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+/* ---------------- GALLERY SLIDES MUST SCROLL ---------------- */
+.slide.gallerySlide{
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 140px; /* lets you reach the last row */
+}
+
+/* subtle scrollbar (webkit) */
+.slide.gallerySlide::-webkit-scrollbar { width: 8px; }
+.slide.gallerySlide::-webkit-scrollbar-track { background: transparent; }
+.slide.gallerySlide::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.12);
+  border-radius: 999px;
+}
+.slide.gallerySlide::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.18);
+}
+
+/* ---------------- MASONRY ---------------- */
 .masonry{
   width: min(1100px, 92vw);
   margin: 0 auto;
@@ -236,12 +252,7 @@ h1,h2{
   transform: scale(1.03);
 }
 
-/* Optional visual hierarchy: different “heights” by padding */
-.tile-hero img{ }
-.tile-md img{ }
-.tile-sm img{ }
-
-/* ---------- LOGO TILE BACKGROUNDS + MAT ---------- */
+/* ---------------- LOGO BACKGROUNDS + MATS ---------------- */
 .logoBg-ivory{ background: var(--ivory); }
 .logoBg-stone{ background: var(--stone); }
 .logoBg-flat{ background: var(--flat); }
@@ -252,24 +263,19 @@ h1,h2{
   background-position: center;
 }
 
-/* Logos should be contained (not cropped) */
-.tile.logoBg-ivory img,
-.tile.logoBg-stone img,
-.tile.logoBg-flat img,
-.tile.logoBg-charcoal img,
-.tile.logoBg-texture img{
-  width: 100%;
-  height: 100%;
+/* contain logos + padding */
+.tile.isLogo img{
   object-fit: contain;
   padding: 9%;
+  transform: none; /* stop zoom from cropping padding */
 }
 
-/* Light “museum mat” line */
-.tile.logoBg-ivory::before,
-.tile.logoBg-stone::before,
-.tile.logoBg-flat::before,
-.tile.logoBg-texture::before,
-.tile.logoBg-charcoal::before{
+.tile.isLogo:hover img{
+  transform: scale(1.01);
+}
+
+/* museum mat line */
+.tile.isLogo::before{
   content: "";
   position: absolute;
   inset: 14px;
@@ -283,10 +289,11 @@ h1,h2{
   border-color: rgba(255,255,255,0.10);
 }
 
-/* Extra subtle mat for color-heavy logos like Latinx Club */
-.matFrame img{ padding: 10%; }
+.matFrame img{
+  padding: 10%;
+}
 
-/* ---------- VIEWER (fullscreen click to open/close) ---------- */
+/* ---------------- FULLSCREEN VIEWER ---------------- */
 .viewer{
   position: fixed;
   inset: 0;
@@ -325,7 +332,7 @@ h1,h2{
   cursor: pointer;
 }
 
-/* ---------- CONTACT ---------- */
+/* ---------------- CONTACT ---------------- */
 .contact{
   background: #111;
   color: #f5f2ed;
@@ -404,11 +411,7 @@ h1,h2{
   color: rgba(245,242,237,0.58);
 }
 
-.mono{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-}
-
-/* ---------- RESPONSIVE ---------- */
+/* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 980px){
   .slide{ padding: 110px 26px 40px; }
   .masonry{ column-count: 2; }
