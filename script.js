@@ -21,12 +21,12 @@ let isAnimating = false;
 const DATA = {
   logos: [
     { src: "images/logo-1.webp", label: "Salted Mill" },
-    { src: "images/logo-2.webp", label: "Keenan Self Storage" },
-    { src: "images/logo-3.webp", label: "Fire Tigers" },
-    { src: "images/logo-4.webp", label: "Seasons Finishing" },
-    { src: "images/logo-5.webp", label: "Latinx Club" },
-    { src: "images/logo-6.webp", label: "Helm" },
-    { src: "images/logo-7.webp", label: "CMC" },
+    { src: "images/logo-2.webp", label: "CMC" },
+    { src: "images/logo-3.webp", label: "Keenan Self Storage" },
+    { src: "images/logo-4.webp", label: "Latinx Club" },
+    { src: "images/logo-5.webp", label: "4 Seasons Finishings" },
+    { src: "images/logo-6.webp", label: "Fire Tigers" },
+    { src: "images/logo-7.webp", label: "Helm" },
   ],
   web: [
     { src: "images/CMC.webp", label: "CMC" },
