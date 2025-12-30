@@ -48,6 +48,31 @@ h1,h2{
   padding: 120px 64px 64px;
   position: relative;
 }
+/* Allow vertical scrolling on gallery slides */
+.slide.gallerySlide {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 120px; /* breathing room for last row */
+}
+
+/* Make scrollbar subtle (luxury feel) */
+.slide.gallerySlide::-webkit-scrollbar {
+  width: 8px;
+}
+
+.slide.gallerySlide::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.slide.gallerySlide::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.12);
+  border-radius: 999px;
+}
+
+.slide.gallerySlide::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.18);
+}
+
 
 /* ---------- NAV ---------- */
 .nav{
