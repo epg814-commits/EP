@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Christina Mechelle Creates</title>
+  <title>Studio L</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -16,7 +16,7 @@
     <div class="topbar__inner">
       <div class="brand">
         <span class="brand__dot"></span>
-        <span class="brand__name">CMC</span>
+        <span class="brand__name">Studio L</span>
       </div>
 
       <nav class="nav" aria-label="Primary">
@@ -110,26 +110,41 @@
       </section>
 
       <!-- Slide 6: Contact -->
-      <section class="slide slide--center" data-index="5" aria-label="Contact">
-        <div class="panel panel--contact">
-          <div class="contact">
-            <div class="contact__left">
-              <h2 class="panel__title">Let’s build something.</h2>
-              <p class="panel__desc">
-                Tell me what you need — logo, website, or art — and I’ll follow up with next steps.
-              </p>
+      <!-- Slide 6: Contact (form only) -->
+<section class="slide slide--center" data-index="5" aria-label="Contact">
+  <div class="panel panel--contact">
+    <div class="contact contact--solo">
+      <form class="form form--solo" id="contactForm">
+        <h2 class="panel__title">Let’s build something.</h2>
+        <p class="panel__desc">
+          Tell me what you need — logo, website, or art — and I’ll follow up with next steps.
+        </p>
 
-             <!--  <div class="contact__meta">
-                <div class="metaCard">
-                  <div class="metaCard__label">Email</div>
-                  <div class="metaCard__value"><a href="mailto:EPG814@gmail.com">EPG814@gmail.com</a></div>
-                </div>
-                <div class="metaCard">
-                  <div class="metaCard__label">Phone</div>
-                  <div class="metaCard__value"><a href="tel:+15093039869">509.303.9869</a></div>
-                </div>
-              </div>
-            </div>  -->
+        <div class="form__row">
+          <label class="form__label">Name</label>
+          <input class="form__input" name="name" autocomplete="name" placeholder="Your name" required />
+        </div>
+
+        <div class="form__row">
+          <label class="form__label">Email</label>
+          <input class="form__input" type="email" name="email" autocomplete="email" placeholder="you@email.com" required />
+        </div>
+
+        <div class="form__row">
+          <label class="form__label">Message</label>
+          <textarea class="form__input form__textarea" name="message" placeholder="Project details, timeline, any links..." required></textarea>
+        </div>
+
+        <button class="btn btn--primary btn--wide" type="submit">Send</button>
+
+       <!-- <p class="form__note">
+          write notes here below form
+        </p> -->
+      </form>
+    </div>
+  </div>
+</section>
+
 
             <form class="form" id="contactForm">
               <div class="form__row">
