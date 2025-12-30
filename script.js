@@ -34,27 +34,43 @@ function lock(ms = 900) {
 window.addEventListener(
   "wheel",
   (e) => {
-    // If viewer is open, ignore wheel
+    // If fullscreen viewer is open → ignore
     if (viewer.classList.contains("open")) return;
 
-    // Prevent the “double scroll” trackpad effect
+    const currentSlide = slides[index];
+
+    // If this slide is vertically scrollable, let it scroll first
+    if (currentSlide.classList.contains("gallerySlide")) {
+      const atTop = currentSlide.scrollTop === 0;
+      const atBottom =
+        Math.ceil(currentSlide.scrollTop + currentSlide.clientHeight) >=
+        currentSlide.scrollHeight;
+
+      // User is scrolling inside content → DO NOT slide horizontally
+      if (
+        (e.deltaY > 0 && !atBottom) ||
+        (e.deltaY < 0 && !atTop)
+      ) {
+        return; // allow normal vertical scroll
+      }
+    }
+
+    // Otherwise, handle horizontal slide navigation
     e.preventDefault();
 
     if (isLocked) return;
 
-    wheelAccum += e.deltaY;
+    if (e.deltaY > 0 && index < slides.length - 1) {
+      goTo(index + 1);
+    } else if (e.deltaY < 0 && index > 0) {
+      goTo(index - 1);
+    }
 
-    const THRESH = 60; // tune this if needed
-    if (Math.abs(wheelAccum) < THRESH) return;
-
-    if (wheelAccum > 0) goTo(index + 1);
-    else goTo(index - 1);
-
-    wheelAccum = 0;
     lock(900);
   },
   { passive: false }
 );
+
 
 /* --- Keyboard navigation --- */
 window.addEventListener("keydown", (e) => {
